@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>SwiftBeanCountImporter  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="SwiftBeanCountImporter  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">SwiftBeanCountImporter Docs</a> (76% documented)</p>
+        <p class="header-right"><a href="https://github.com/Nef10/SwiftBeanCountImporter"><img src="img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right"><a href="dash-feed://https%3A%2F%2FNef10.github.io%2FSwiftBeanCountImporter%2Fdocsets%2FSwiftBeanCountImporter.xml"><img src="img/dash.png"/>Install in Dash</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">SwiftBeanCountImporter Reference</a>
+        <img id="carat" src="img/carat.png" />
+        SwiftBeanCountImporter  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/FileImporterManager.html">FileImporterManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/ImporterManager.html">ImporterManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/Settings.html">Settings</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TextImporterManager.html">TextImporterManager</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/FileImporter.html">FileImporter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/Importer.html">Importer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/TextImporter.html">TextImporter</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/ImportedTransaction.html">ImportedTransaction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ImporterSetting.html">ImporterSetting</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <h1 id='swiftbeancountimporter' class='heading'>SwiftBeanCountImporter</h1>
+
+<p><a href="https://github.com/Nef10/SwiftBeanCountImporter/actions?query=workflow%3A%22CI%22"><img src="https://github.com/Nef10/SwiftBeanCountImporter/workflows/CI/badge.svg?event=push" alt="CI Status"></a> <a href="https://nef10.github.io/SwiftBeanCountImporter/"><img src="https://nef10.github.io/SwiftBeanCountImporter/badge.svg" alt="Documentation percentage"></a> <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Nef10/SwiftBeanCountImporter" alt="License: MIT"></a> <a href="https://github.com/Nef10/SwiftBeanCountImporter/releases"><img src="https://img.shields.io/github/v/release/Nef10/SwiftBeanCountImporter?label=SemVer&sort=semver" alt="Latest version"></a> <img src="https://img.shields.io/badge/platform-linux%20%7C%20macOS%20%7C%20iOS%20%7C%20watchOS%20%7C%20tvOS-blue" alt="platforms supported: linux | macOS | iOS | watchOS | tvOS"> <img src="https://img.shields.io/badge/SPM-compatible-blue" alt="SPM compatible"></p>
+<h3 id='strong-em-this-project-is-part-for-swiftbeancount-please-check-out-the-main-documentation-a-href-https-github-com-nef10-swiftbeancount-here-a-em-strong' class='heading'><strong><em>This project is part for SwiftBeanCount, please check out the main documentation <a href="https://github.com/Nef10/SwiftBeanCount">here</a>.</em></strong></h3>
+<h2 id='what' class='heading'>What</h2>
+
+<p>This is the importer of SwiftBeanCount. It reads files to create transactions. This library does not include any UI, so consumers need to provide a UI for selecting accounts, settings, as well as editing of transactions.</p>
+<h2 id='how-to-use' class='heading'>How to use</h2>
+<h3 id='import-transactions' class='heading'>Import Transactions</h3>
+
+<p>1) Create a <code><a href="Protocols/FileImporter.html">FileImporter</a></code> via <code>FileImporterManager.new(ledger: Ledger?, url: URL?)</code> or a <code><a href="Protocols/TextImporter.html">TextImporter</a></code> via <code>TextImporterManager.new(ledger: Ledger?, transaction: String, balance: String)</code>, depending on what you want to import.
+2) Check <code>possibleAccounts()</code> on the importer. If there is more than one or none, promt to user to enter/select the account to use.
+2) If using a FileImporter call <code>loadFile()</code>.
+4) Pass the result to the importer via <code>useAccount(name:)</code>.
+5) If using a TextImporter, call <code>parse()</code> to get a string of the parsed transactions. If using a FileImporter, call <code>parseLineIntoTransaction()</code> to retrive transaction after transactions till it returns <code>nil</code>. It is recommended to allow the user the edit the transactions while doing this. (See <a href="https://github.com/Nef10/SwiftBeanCountImporter/issues/2">#2</a>)</p>
+<h3 id='settings' class='heading'>Settings</h3>
+
+<p>The different importers which are included in this library can be configured:</p>
+
+<p>1) Call <code><a href="Enums/ImporterManager.html#/s:22SwiftBeanCountImporter0D7ManagerO9importersSayAA0D0_pXpGvpZ">ImporterManager.importers</a></code> to retreive all importers
+2) Call <code>importer.settingsName</code> to get the user friendly name of the importer
+3) Call <code>importer.settings</code> to get the <code><a href="Structs/ImporterSetting.html">ImporterSetting</a></code>s which an importer offers
+3) Use <code>importer.get(setting: ImporterSetting)</code> and <code>importer.set(setting: ImporterSetting, to value: String)</code> to modify these settings.</p>
+
+<p>Please check out the complete documentation <a href="https://nef10.github.io/SwiftBeanCountImporter/">here</a>, or have a look at the <a href="https://github.com/Nef10/SwiftBeanCountImporterApp/">SwiftBeanCountImporterApp</a> which uses this library.</p>
+<h2 id='usage' class='heading'>Usage</h2>
+
+<p>The library supports the Swift Package Manger, so simply add a dependency in your <code>Package.swift</code>:</p>
+<pre class="highlight plaintext"><code>.package(url: "https://github.com/Nef10/SwiftBeanCountImporter.git", .exact("X.Y.Z")),
+</code></pre>
+
+<p><em>Note: as per semantic versioning all versions changes &lt; 1.0.0 can be breaking, so please use <code>.exact</code> for now</em></p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2020 <a class="link" href="https://github.com/Nef10" target="_blank" rel="external">Nef10</a>. All rights reserved. (Last updated: 2020-06-06)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

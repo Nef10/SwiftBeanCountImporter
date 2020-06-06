@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ImporterManager Enumeration Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Enum/ImporterManager" class="dashAnchor"></a>
+    <a title="ImporterManager Enumeration Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">SwiftBeanCountImporter Docs</a> (76% documented)</p>
+        <p class="header-right"><a href="https://github.com/Nef10/SwiftBeanCountImporter"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right"><a href="dash-feed://https%3A%2F%2FNef10.github.io%2FSwiftBeanCountImporter%2Fdocsets%2FSwiftBeanCountImporter.xml"><img src="../img/dash.png"/>Install in Dash</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">SwiftBeanCountImporter Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        ImporterManager Enumeration Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/FileImporterManager.html">FileImporterManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ImporterManager.html">ImporterManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Settings.html">Settings</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/TextImporterManager.html">TextImporterManager</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/FileImporter.html">FileImporter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Importer.html">Importer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TextImporter.html">TextImporter</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/ImportedTransaction.html">ImportedTransaction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ImporterSetting.html">ImporterSetting</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>ImporterManager</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">ImporterManager</span></code></pre>
+
+                </div>
+              </div>
+            <p>The ImporterManager is responsible for all different types of <code><a href="../Protocols/Importer.html">Importer</a></code>s.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:22SwiftBeanCountImporter0D7ManagerO9importersSayAA0D0_pXpGvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/importers" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter0D7ManagerO9importersSayAA0D0_pXpGvpZ">importers</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Return all existing importers</p>
+
+<p>As the importers do not need to be called directly, this should only
+be used in the settings to allow displaying all settings of all importers</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">importers</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/Importer.html">Importer</a></span><span class="o">.</span><span class="k">Type</span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/master/Sources/SwiftBeanCountImporter/Importer.swift#L19-L21">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2020 <a class="link" href="https://github.com/Nef10" target="_blank" rel="external">Nef10</a>. All rights reserved. (Last updated: 2020-06-06)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
