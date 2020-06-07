@@ -1,61 +1,6 @@
 {
   "warnings": [
-    {
-      "file": "/Users/runner/runners/2.263.0/work/SwiftBeanCountImporter/SwiftBeanCountImporter/Sources/SwiftBeanCountImporter/FileImporter.swift",
-      "line": 44,
-      "symbol": "FileImporter",
-      "symbol_kind": "source.lang.swift.decl.protocol",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/runner/runners/2.263.0/work/SwiftBeanCountImporter/SwiftBeanCountImporter/Sources/SwiftBeanCountImporter/FileImporter.swift",
-      "line": 46,
-      "symbol": "FileImporter.accountName",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/runner/runners/2.263.0/work/SwiftBeanCountImporter/SwiftBeanCountImporter/Sources/SwiftBeanCountImporter/FileImporter.swift",
-      "line": 47,
-      "symbol": "FileImporter.fileName",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/runner/runners/2.263.0/work/SwiftBeanCountImporter/SwiftBeanCountImporter/Sources/SwiftBeanCountImporter/FileImporter.swift",
-      "line": 49,
-      "symbol": "FileImporter.loadFile()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/runner/runners/2.263.0/work/SwiftBeanCountImporter/SwiftBeanCountImporter/Sources/SwiftBeanCountImporter/FileImporter.swift",
-      "line": 50,
-      "symbol": "FileImporter.parseLineIntoTransaction()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/runner/runners/2.263.0/work/SwiftBeanCountImporter/SwiftBeanCountImporter/Sources/SwiftBeanCountImporter/TextImporter.swift",
-      "line": 33,
-      "symbol": "TextImporter",
-      "symbol_kind": "source.lang.swift.decl.protocol",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/runner/runners/2.263.0/work/SwiftBeanCountImporter/SwiftBeanCountImporter/Sources/SwiftBeanCountImporter/TextImporter.swift",
-      "line": 35,
-      "symbol": "TextImporter.init(ledger:transaction:balance:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/runner/runners/2.263.0/work/SwiftBeanCountImporter/SwiftBeanCountImporter/Sources/SwiftBeanCountImporter/TextImporter.swift",
-      "line": 37,
-      "symbol": "TextImporter.parse()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    }
+
   ],
   "source_directory": "/Users/runner/runners/2.263.0/work/SwiftBeanCountImporter/SwiftBeanCountImporter"
 }
