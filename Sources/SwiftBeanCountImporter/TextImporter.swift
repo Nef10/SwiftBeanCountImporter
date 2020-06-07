@@ -30,7 +30,7 @@ public enum TextImporterManager {
 
 }
 
-protocol TransactionBalanceTextImporter:  TextImporter {
+protocol TransactionBalanceTextImporter: TextImporter {
     init(ledger: Ledger?, transaction: String, balance: String)
 }
 
