@@ -76,7 +76,8 @@ public enum Settings {
             return defaultDateTolerance
         }
         set(newValue) {
-            UserDefaults.standard.set(newValue, forKey: dateToleranceUserDefaultsKey)
+            // the string conversion is a workaround for https://bugs.swift.org/plugins/servlet/mobile#issue/SR-15124
+            UserDefaults.standard.set("\(newValue)", forKey: dateToleranceUserDefaultsKey)
         }
     }
 
