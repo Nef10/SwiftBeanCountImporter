@@ -69,7 +69,7 @@ public struct ImportedTransaction {
         if !payee.isEmpty {
             Settings.setPayeeMapping(key: originalDescription, payee: payee)
             if let accountName = accountName {
-                Settings.setAccountMapping(key: originalDescription, account: accountName.fullName)
+                Settings.setAccountMapping(key: payee, account: accountName.fullName)
             }
         }
         Settings.setDescriptionMapping(key: originalDescription, description: description)
