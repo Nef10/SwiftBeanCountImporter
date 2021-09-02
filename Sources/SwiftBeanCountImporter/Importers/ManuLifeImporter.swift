@@ -44,29 +44,12 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
     private let transactionInputString: String
     private let balanceInputString: String
 
-    private var employeeBasicFraction: Double { Double(ledger?.accounts.first { $0.name == accountName }?.metaData["employee-basic-fraction"] ?? "") ?? defaultContribution }
-    private var employerBasicFraction: Double { Double(ledger?.accounts.first { $0.name == accountName }?.metaData["employer-basic-fraction"] ?? "") ?? defaultContribution }
-    private var employerMatchFraction: Double { Double(ledger?.accounts.first { $0.name == accountName }?.metaData["employer-match-fraction"] ?? "") ?? defaultContribution }
-    private var employeeVoluntaryFraction: Double {
-        Double(ledger?.accounts.first { $0.name == accountName }?.metaData["employee-voluntary-fraction"] ?? "") ?? defaultContribution
-    }
-
-    private var accountString: String {
-        guard let accountName = accountName else {
-            fatalError("No account configured")
-        }
-        return accountName.fullName.split(separator: ":").dropLast(1).joined(separator: ":")
-    }
-
-    private var cashAccountName: String {
-        guard let accountName = accountName else {
-            fatalError("No account configured")
-        }
-        guard let cashAccountName = accountName.fullName.split(separator: ":").last else {
-            fatalError("Configured account is invalid")
-        }
-        return String(cashAccountName)
-    }
+    private var accountString: String { configuredAccountName.fullName.split(separator: ":").dropLast(1).joined(separator: ":") }
+    private var account: Account? { ledger?.accounts.first { $0.name == accountName } }
+    private var employeeBasicFraction: Double { Double(account?.metaData["employee-basic-fraction"] ?? "") ?? defaultContribution }
+    private var employerBasicFraction: Double { Double(account?.metaData["employer-basic-fraction"] ?? "") ?? defaultContribution }
+    private var employerMatchFraction: Double { Double(account?.metaData["employer-match-fraction"] ?? "") ?? defaultContribution }
+    private var employeeVoluntaryFraction: Double { Double(account?.metaData["employee-voluntary-fraction"] ?? "") ?? defaultContribution }
 
     // Results from parsing
     private var parsedManuLifeBalances = [ManuLifeBalance]()
@@ -275,9 +258,7 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
             }
         }
 
-        if let accountName = try? AccountName("\(accountString):\(cashAccountName)") {
-            postings.insert(Posting(accountName: accountName, amount: Amount(number: -totalAmount, commoditySymbol: commoditySymbol, decimalDigits: 2)), at: 0)
-        }
+        postings.insert(Posting(accountName: configuredAccountName, amount: Amount(number: -totalAmount, commoditySymbol: commoditySymbol, decimalDigits: 2)), at: 0)
 
         let prices: [Price] = buys.compactMap { manuLifeBuy -> Price? in
             try? Price(date: date, commoditySymbol: manuLifeBuy.commodity, amount: ParserUtils.parseAmountFrom(string: manuLifeBuy.price, commoditySymbol: commoditySymbol))
