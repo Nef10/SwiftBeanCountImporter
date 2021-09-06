@@ -1,0 +1,21 @@
+name: Auto-Merge Branch deletion
+on:
+  pull_request_target:
+    types: [closed]
+
+jobs:
+  automerge-branch-deletion:
+    name: Delete Branch
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'sync') && github.event.pull_request.merged == true
+    steps:
+    - name: 'Delete Branch'
+      uses: actions/github-script@v4.1.0
+      with:
+        script: |
+          console.log(context.payload.pull_request.head.ref);
+          await github.git.deleteRef({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: `heads/${context.payload.pull_request.head.ref}`,
+          });
