@@ -21,7 +21,7 @@ This is the importer of SwiftBeanCount. It reads files to create transactions. T
 
 ### Settings
 
-There are settings for the date tolerance when detecting duplicate transactions, as well as for the mapping the user saved in step 6) of importing transactions. Your app can allow the user to view and edit these via the `Settings` object.
+There are settings for the date tolerance when detecting duplicate transactions, as well as for the mapping the user saved in step 6) of importing transactions. Your app can allow the user to view and edit these via the `Settings` object. Settings are by default stored in `UserDefaults` but you can bring your own `SettingsStorage` by setting `Settings.storage`.
 
 ### Help
 

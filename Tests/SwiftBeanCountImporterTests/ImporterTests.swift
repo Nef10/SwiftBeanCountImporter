@@ -13,7 +13,31 @@ import XCTest
 final class ImporterTests: XCTestCase {
 
     func testAllImporters() {
-        XCTAssertEqual(ImporterFactory.allImporters.count, (FileImporterFactory.importers + TextImporterFactory.importers).count)
+        XCTAssertEqual(ImporterFactory.allImporters.count, (FileImporterFactory.importers + TextImporterFactory.importers + DownloadImporterFactory.importers).count)
+    }
+
+    func testNoEqualImporterNames() {
+        var names = [String]()
+        let importers = ImporterFactory.allImporters
+        for importer in importers {
+            guard !names.contains(importer.importerName) else {
+                XCTFail("Importers cannot use the same name")
+                return
+            }
+            names.append(importer.importerName)
+        }
+    }
+
+    func testNoEqualImporterTypes() {
+        var types = [String]()
+        let importers = ImporterFactory.allImporters as! [BaseImporter.Type] // swiftlint:disable:this force_cast
+        for importer in importers {
+            guard !types.contains(importer.importerType) else {
+                XCTFail("Importers cannot use the same type")
+                return
+            }
+            types.append(importer.importerType)
+        }
     }
 
     func testFileImporter() {

@@ -194,36 +194,52 @@ enum TestUtils {
 
 extension AccountNameProvider: ImporterDelegate {
 
-    func requestInput(name: String, suggestions: [String], allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
+    func requestInput(name: String, suggestions: [String], isSecret: Bool, completion: (String) -> Bool) {
         XCTAssertEqual(name, "Account")
-        XCTAssertFalse(allowSaving)
-        XCTAssertFalse(allowSaved)
+        XCTAssertFalse(isSecret)
         let result = completion(account.fullName)
         XCTAssert(result)
     }
 
-    func requestSecretInput(name: String, allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
-        XCTFail("requestSecretInput should not be called for an account")
+    func saveCredential(_ value: String, for key: String) {
+        XCTFail("saveCredential should not be called")
+    }
+
+    func readCredential(_ key: String) -> String? {
+        XCTFail("readCredential should not be called")
+        return nil
+    }
+
+    func error(_ error: Error) {
+        XCTFail("error should not be called")
     }
 
 }
 
 extension AccountNameSuggestionVerifier: ImporterDelegate {
 
-    func requestInput(name: String, suggestions: [String], allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
+    func requestInput(name: String, suggestions: [String], isSecret: Bool, completion: (String) -> Bool) {
         XCTAssertEqual(name, "Account")
         XCTAssertEqual(suggestions.count, expectedValues.count)
         for suggestion in suggestions {
             XCTAssert(expectedValues.contains(suggestion))
         }
-        XCTAssertFalse(allowSaving)
-        XCTAssertFalse(allowSaved)
+        XCTAssertFalse(isSecret)
         verified = true
         _ = completion(TestUtils.cash.fullName)
     }
 
-    func requestSecretInput(name: String, allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
-        XCTFail("requestSecretInput should not be called for an account")
+    func saveCredential(_ value: String, for key: String) {
+        XCTFail("saveCredential should not be called")
+    }
+
+    func readCredential(_ key: String) -> String? {
+        XCTFail("readCredential should not be called")
+        return nil
+    }
+
+    func error(_ error: Error) {
+        XCTFail("error should not be called")
     }
 
 }
@@ -262,12 +278,21 @@ extension XCTestCase {
 
 extension NoInputCallVerifier: ImporterDelegate {
 
-    func requestInput(name: String, suggestions: [String], allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
+    func requestInput(name: String, suggestions: [String], isSecret: Bool, completion: (String) -> Bool) {
         XCTFail("requestInput should not be called")
     }
 
-    func requestSecretInput(name: String, allowSaving: Bool, allowSaved: Bool, completion: (String) -> Bool) {
-        XCTFail("requestSecretInput should not be called")
+    func saveCredential(_ value: String, for key: String) {
+        XCTFail("saveCredential should not be called")
+    }
+
+    func readCredential(_ key: String) -> String? {
+        XCTFail("readCredential should not be called")
+        return nil
+    }
+
+    func error(_ error: Error) {
+        XCTFail("error should not be called")
     }
 
 }
