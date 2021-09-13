@@ -52,16 +52,18 @@
             <a class="nav-group-name-link" href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/FileImporterManager.html">FileImporterManager</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/ImporterManager.html">ImporterManager</a>
+                <a class="nav-group-task-link" href="Enums/ImporterFactory.html">ImporterFactory</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Enums/Settings.html">Settings</a>
               </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/TextImporterManager.html">TextImporterManager</a>
+                <a class="nav-group-task-link" href="Extensions.html#/c:objc(cs)NSUserDefaults">UserDefaults</a>
               </li>
             </ul>
           </li>
@@ -69,13 +71,10 @@
             <a class="nav-group-name-link" href="Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/FileImporter.html">FileImporter</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Protocols/Importer.html">Importer</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Protocols/TextImporter.html">TextImporter</a>
+                <a class="nav-group-task-link" href="Protocols/SettingsStorage.html">SettingsStorage</a>
               </li>
             </ul>
           </li>
@@ -84,9 +83,6 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Structs/ImportedTransaction.html">ImportedTransaction</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Structs/ImporterSetting.html">ImporterSetting</a>
               </li>
             </ul>
           </li>
@@ -106,37 +102,6 @@
           <div class="section-content">
             <div class="task-group">
               <ul class="item-container">
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:22SwiftBeanCountImporter04FileD0P"></a>
-                    <a name="//apple_ref/swift/Protocol/FileImporter" class="dashAnchor"></a>
-                    <a class="token" href="#/s:22SwiftBeanCountImporter04FileD0P">FileImporter</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Protocol to represent an Importer which imports a file</p>
-
-                        <a href="Protocols/FileImporter.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">FileImporter</span> <span class="p">:</span> <span class="kt"><a href="Protocols/Importer.html">Importer</a></span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/FileImporter.swift#L45-L66">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -163,7 +128,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L36-L58">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L97-L140">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -171,9 +136,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:22SwiftBeanCountImporter04TextD0P"></a>
-                    <a name="//apple_ref/swift/Protocol/TextImporter" class="dashAnchor"></a>
-                    <a class="token" href="#/s:22SwiftBeanCountImporter04TextD0P">TextImporter</a>
+                    <a name="/s:22SwiftBeanCountImporter15SettingsStorageP"></a>
+                    <a name="//apple_ref/swift/Protocol/SettingsStorage" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter15SettingsStorageP">SettingsStorage</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -181,20 +146,20 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Protocol to represent an Importer which imports text</p>
+                        <p>Protocol to define a storage for the settings</p>
 
-                        <a href="Protocols/TextImporter.html" class="slightly-smaller">See more</a>
+                        <a href="Protocols/SettingsStorage.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">TextImporter</span> <span class="p">:</span> <span class="kt"><a href="Protocols/Importer.html">Importer</a></span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">SettingsStorage</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/TextImporter.swift#L38-L43">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Settings.swift#L12-L22">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -207,7 +172,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/Nef10" target="_blank" rel="noopener" rel="external">Nef10</a>. All rights reserved. (Last updated: 2021-08-22)</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/Nef10" target="_blank" rel="noopener" rel="external">Nef10</a>. All rights reserved. (Last updated: 2021-09-13)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="noopener" rel="external">jazzy ♪♫ v0.14.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="noopener" rel="external">Realm</a> project.</p>
     </section>
   </body>

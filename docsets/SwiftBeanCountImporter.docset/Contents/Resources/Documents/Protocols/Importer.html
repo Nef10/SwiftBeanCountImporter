@@ -52,16 +52,18 @@
             <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/FileImporterManager.html">FileImporterManager</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/ImporterManager.html">ImporterManager</a>
+                <a class="nav-group-task-link" href="../Enums/ImporterFactory.html">ImporterFactory</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/Settings.html">Settings</a>
               </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/TextImporterManager.html">TextImporterManager</a>
+                <a class="nav-group-task-link" href="../Extensions.html#/c:objc(cs)NSUserDefaults">UserDefaults</a>
               </li>
             </ul>
           </li>
@@ -69,13 +71,10 @@
             <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/FileImporter.html">FileImporter</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/Importer.html">Importer</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/TextImporter.html">TextImporter</a>
+                <a class="nav-group-task-link" href="../Protocols/SettingsStorage.html">SettingsStorage</a>
               </li>
             </ul>
           </li>
@@ -84,9 +83,6 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/ImportedTransaction.html">ImportedTransaction</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/ImporterSetting.html">ImporterSetting</a>
               </li>
             </ul>
           </li>
@@ -107,7 +103,7 @@
             <p>Protocol to represent an Importer, regardless of type</p>
 
               <div class="slightly-smaller">
-                <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L36-L58">Show on GitHub</a>
+                <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L97-L140">Show on GitHub</a>
               </div>
           </div>
         </section>
@@ -119,9 +115,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:22SwiftBeanCountImporter0D0P12settingsNameSSvpZ"></a>
-                    <a name="//apple_ref/swift/Variable/settingsName" class="dashAnchor"></a>
-                    <a class="token" href="#/s:22SwiftBeanCountImporter0D0P12settingsNameSSvpZ">settingsName</a>
+                    <a name="/s:22SwiftBeanCountImporter0D0P10importNameSSvp"></a>
+                    <a name="//apple_ref/swift/Property/importName" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter0D0P10importNameSSvp">importName</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -129,21 +125,22 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>User friendly name of the Importer</p>
+                        <p>A description of the import, e.g. a file name together with the importer name</p>
 
-<p>Should be used in the settings to group the setting of this importer.</p>
+<p>Can be used in the UI when an importer requests more information, e.g.
+account selection or credentials</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">settingsName</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">importName</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L41">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L103">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -151,39 +148,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:22SwiftBeanCountImporter0D0P8settingsSayAA0D7SettingVGvpZ"></a>
-                    <a name="//apple_ref/swift/Variable/settings" class="dashAnchor"></a>
-                    <a class="token" href="#/s:22SwiftBeanCountImporter0D0P8settingsSayAA0D7SettingVGvpZ">settings</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Settings of this importer</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">settings</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/ImporterSetting.html">ImporterSetting</a></span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L44">Show on GitHub</a>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:22SwiftBeanCountImporter0D0P20possibleAccountNames3forSay0abC5Model0F4NameVGAF6LedgerCSg_tF"></a>
-                    <a name="//apple_ref/swift/Method/possibleAccountNames(for:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:22SwiftBeanCountImporter0D0P20possibleAccountNames3forSay0abC5Model0F4NameVGAF6LedgerCSg_tF">possibleAccountNames(for:<wbr>)</a>
+                    <a name="/s:22SwiftBeanCountImporter0D0P20possibleAccountNamesSay0abC5Model0F4NameVGyF"></a>
+                    <a name="//apple_ref/swift/Method/possibleAccountNames()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter0D0P20possibleAccountNamesSay0abC5Model0F4NameVGyF">possibleAccountNames()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -198,32 +165,12 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">possibleAccountNames</span><span class="p">(</span><span class="k">for</span> <span class="nv">ledger</span><span class="p">:</span> <span class="kt">Ledger</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">AccountName</span><span class="p">]</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">possibleAccountNames</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">AccountName</span><span class="p">]</span></code></pre>
 
                         </div>
                       </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>ledger</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>existing ledger to allow reading attributes of the accounts
-                which can be used to determine to correct account</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L49">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L106">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -275,7 +222,7 @@ exactly one account</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L56">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L113">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -283,55 +230,33 @@ exactly one account</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:22SwiftBeanCountImporter0D0PAAE3get7settingSSSgAA0D7SettingV_tFZ"></a>
-                    <a name="//apple_ref/swift/Method/get(setting:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:22SwiftBeanCountImporter0D0PAAE3get7settingSSSgAA0D7SettingV_tFZ">get(setting:<wbr>)</a>
+                    <a name="/s:22SwiftBeanCountImporter0D0P4loadyyF"></a>
+                    <a name="//apple_ref/swift/Method/load()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter0D0P4loadyyF">load()</a>
                     </code>
-                      <span class="declaration-note">
-                        Extension method
-                      </span>
                   </div>
                   <div class="height-container">
                     <div class="pointer-container"></div>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Get the settings value of a specific setting</p>
+                        <p>Loads the data to import</p>
+
+<p>You must call this method before you call <code><a href="../Protocols/Importer.html#/s:22SwiftBeanCountImporter0D0P15nextTransactionAA08ImportedF0VSgyF">nextTransaction()</a></code>.
+You might want to show a loading indicator during the loading, as depending
+on the importer this might take some time.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">get</span><span class="p">(</span><span class="nv">setting</span><span class="p">:</span> <span class="kt"><a href="../Structs/ImporterSetting.html">ImporterSetting</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">load</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>setting</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Setting to read</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>value of the setting</p>
-                      </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L65-L67">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L120">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -339,63 +264,32 @@ exactly one account</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:22SwiftBeanCountImporter0D0PAAE3set7setting2toyAA0D7SettingV_SStFZ"></a>
-                    <a name="//apple_ref/swift/Method/set(setting:to:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:22SwiftBeanCountImporter0D0PAAE3set7setting2toyAA0D7SettingV_SStFZ">set(setting:<wbr>to:<wbr>)</a>
+                    <a name="/s:22SwiftBeanCountImporter0D0P15nextTransactionAA08ImportedF0VSgyF"></a>
+                    <a name="//apple_ref/swift/Method/nextTransaction()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter0D0P15nextTransactionAA08ImportedF0VSgyF">nextTransaction()</a>
                     </code>
-                      <span class="declaration-note">
-                        Extension method
-                      </span>
                   </div>
                   <div class="height-container">
                     <div class="pointer-container"></div>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Set the value of a sepcific setting</p>
+                        <p>Returns the next <code><a href="../Structs/ImportedTransaction.html">ImportedTransaction</a></code></p>
+
+<p>You must call <code>load</code> before you call this function.
+Returns nil when there are no more lines left.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">set</span><span class="p">(</span><span class="nv">setting</span><span class="p">:</span> <span class="kt"><a href="../Structs/ImporterSetting.html">ImporterSetting</a></span><span class="p">,</span> <span class="n">to</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">nextTransaction</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/ImportedTransaction.html">ImportedTransaction</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>setting</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Setting to write</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>value</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>value to set</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L73-L75">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L126">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -403,55 +297,65 @@ exactly one account</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:22SwiftBeanCountImporter0D0PAAE18getUserDefaultsKey3forSSAA0D7SettingV_tFZ"></a>
-                    <a name="//apple_ref/swift/Method/getUserDefaultsKey(for:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:22SwiftBeanCountImporter0D0PAAE18getUserDefaultsKey3forSSAA0D7SettingV_tFZ">getUserDefaultsKey(for:<wbr>)</a>
+                    <a name="/s:22SwiftBeanCountImporter0D0P16balancesToImportSay0abC5Model7BalanceVGyF"></a>
+                    <a name="//apple_ref/swift/Method/balancesToImport()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter0D0P16balancesToImportSay0abC5Model7BalanceVGyF">balancesToImport()</a>
                     </code>
-                      <span class="declaration-note">
-                        Extension method
-                      </span>
                   </div>
                   <div class="height-container">
                     <div class="pointer-container"></div>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Get the key used in the <code>UserDefaults</code> to save a particular setting</p>
+                        <p>Returns balances to be imported</p>
+
+<p>Only some importer can import balances, so it might return an empty array
+Only call this function after you received all transactions</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">getUserDefaultsKey</span><span class="p">(</span><span class="k">for</span> <span class="nv">setting</span><span class="p">:</span> <span class="kt"><a href="../Structs/ImporterSetting.html">ImporterSetting</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">balancesToImport</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Balance</span><span class="p">]</span></code></pre>
 
                         </div>
                       </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>setting</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>Setting of which you want to have the key</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L132">Show on GitHub</a>
                       </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>key used in the <code>UserDefaults</code></p>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:22SwiftBeanCountImporter0D0P14pricesToImportSay0abC5Model5PriceVGyF"></a>
+                    <a name="//apple_ref/swift/Method/pricesToImport()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter0D0P14pricesToImportSay0abC5Model5PriceVGyF">pricesToImport()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns prices to be imported</p>
+
+<p>Only some importer can import prices, so it might return an empty array
+Only call this function after you received all transactions</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">pricesToImport</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Price</span><span class="p">]</span></code></pre>
+
+                        </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L80-L82">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L138">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -464,7 +368,7 @@ exactly one account</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/Nef10" target="_blank" rel="noopener" rel="external">Nef10</a>. All rights reserved. (Last updated: 2021-08-22)</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/Nef10" target="_blank" rel="noopener" rel="external">Nef10</a>. All rights reserved. (Last updated: 2021-09-13)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="noopener" rel="external">jazzy ♪♫ v0.14.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="noopener" rel="external">Realm</a> project.</p>
     </section>
   </body>

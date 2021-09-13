@@ -52,16 +52,18 @@
             <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/FileImporterManager.html">FileImporterManager</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/ImporterManager.html">ImporterManager</a>
+                <a class="nav-group-task-link" href="../Enums/ImporterFactory.html">ImporterFactory</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/Settings.html">Settings</a>
               </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/TextImporterManager.html">TextImporterManager</a>
+                <a class="nav-group-task-link" href="../Extensions.html#/c:objc(cs)NSUserDefaults">UserDefaults</a>
               </li>
             </ul>
           </li>
@@ -69,13 +71,10 @@
             <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/FileImporter.html">FileImporter</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/Importer.html">Importer</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/TextImporter.html">TextImporter</a>
+                <a class="nav-group-task-link" href="../Protocols/SettingsStorage.html">SettingsStorage</a>
               </li>
             </ul>
           </li>
@@ -84,9 +83,6 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/ImportedTransaction.html">ImportedTransaction</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/ImporterSetting.html">ImporterSetting</a>
               </li>
             </ul>
           </li>
@@ -107,7 +103,7 @@
             <p>Struct describing a transaction which has been imported</p>
 
               <div class="slightly-smaller">
-                <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/FileImporter.swift#L33-L42">Show on GitHub</a>
+                <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L49-L94">Show on GitHub</a>
               </div>
           </div>
         </section>
@@ -141,7 +137,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/FileImporter.swift#L36">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L52">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -149,9 +145,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:22SwiftBeanCountImporter19ImportedTransactionV19originalDescriptionSSvp"></a>
-                    <a name="//apple_ref/swift/Property/originalDescription" class="dashAnchor"></a>
-                    <a class="token" href="#/s:22SwiftBeanCountImporter19ImportedTransactionV19originalDescriptionSSvp">originalDescription</a>
+                    <a name="/s:22SwiftBeanCountImporter19ImportedTransactionV17possibleDuplicate0abC5Model0F0CSgvp"></a>
+                    <a name="//apple_ref/swift/Property/possibleDuplicate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter19ImportedTransactionV17possibleDuplicate0abC5Model0F0CSgvp">possibleDuplicate</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -159,20 +155,163 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The original description from the file. This is used to allow saving
-of description and payee mapping.</p>
+                        <p>Transaction from the ledger of which the imported transaction
+might be a duplicate</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">originalDescription</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">possibleDuplicate</span><span class="p">:</span> <span class="kt">Transaction</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/FileImporter.swift#L40">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L60">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:22SwiftBeanCountImporter19ImportedTransactionV21shouldAllowUserToEditSbvp"></a>
+                    <a name="//apple_ref/swift/Property/shouldAllowUserToEdit" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter19ImportedTransactionV21shouldAllowUserToEditSbvp">shouldAllowUserToEdit</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Indicates if the app should allow the user to edit the imported transaction.</p>
+
+<p>Some importer output transactions which normally do not require edits
+e.g. from stock purchases. These indicate this by settings this value to true.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">shouldAllowUserToEdit</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L66">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:22SwiftBeanCountImporter19ImportedTransactionV11accountName0abC5Model07AccountH0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/accountName" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter19ImportedTransactionV11accountName0abC5Model07AccountH0VSgvp">accountName</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>AccountName of the account the import is for</p>
+
+<p>You can use this to detect which posting the user should not edit
+Note: Not set on imported transactions which have shouldAllowUserToEdit set to false</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">accountName</span><span class="p">:</span> <span class="kt">AccountName</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L72">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:22SwiftBeanCountImporter19ImportedTransactionV10saveMapped11description5payee11accountNameySS_SS0abC5Model07AccountL0VSgtF"></a>
+                    <a name="//apple_ref/swift/Method/saveMapped(description:payee:accountName:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter19ImportedTransactionV10saveMapped11description5payee11accountNameySS_SS0abC5Model07AccountL0VSgtF">saveMapped(description:<wbr>payee:<wbr>accountName:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Saves a mapping of an imported transaction description to a different
+description, payee as well as account name</p>
+
+<p>Note: You should ask to user if they want to save the mapping, ideally
+separately for the account and description/payee</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">saveMapped</span><span class="p">(</span><span class="nv">description</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">payee</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">accountName</span><span class="p">:</span> <span class="kt">AccountName</span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>description</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>new description to use next time a transaction with the same origial description is imported</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>payee</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>new payee to use next time a transaction with the same origial description is imported</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>accountName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>accountName to use next time a transaction with this payee is imported</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L84-L92">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -185,7 +324,7 @@ of description and payee mapping.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/Nef10" target="_blank" rel="noopener" rel="external">Nef10</a>. All rights reserved. (Last updated: 2021-08-22)</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/Nef10" target="_blank" rel="noopener" rel="external">Nef10</a>. All rights reserved. (Last updated: 2021-09-13)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="noopener" rel="external">jazzy ♪♫ v0.14.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="noopener" rel="external">Realm</a> project.</p>
     </section>
   </body>

@@ -52,16 +52,18 @@
             <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/FileImporterManager.html">FileImporterManager</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/ImporterManager.html">ImporterManager</a>
+                <a class="nav-group-task-link" href="../Enums/ImporterFactory.html">ImporterFactory</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/Settings.html">Settings</a>
               </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/TextImporterManager.html">TextImporterManager</a>
+                <a class="nav-group-task-link" href="../Extensions.html#/c:objc(cs)NSUserDefaults">UserDefaults</a>
               </li>
             </ul>
           </li>
@@ -69,13 +71,10 @@
             <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/FileImporter.html">FileImporter</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/Importer.html">Importer</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Protocols/TextImporter.html">TextImporter</a>
+                <a class="nav-group-task-link" href="../Protocols/SettingsStorage.html">SettingsStorage</a>
               </li>
             </ul>
           </li>
@@ -84,9 +83,6 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Structs/ImportedTransaction.html">ImportedTransaction</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Structs/ImporterSetting.html">ImporterSetting</a>
               </li>
             </ul>
           </li>
@@ -107,7 +103,7 @@
             <p>Constants releated to settings of the importer</p>
 
               <div class="slightly-smaller">
-                <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Settings.swift#L12-L29">Show on GitHub</a>
+                <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Settings.swift#L25-L153">Show on GitHub</a>
               </div>
           </div>
         </section>
@@ -119,9 +115,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:22SwiftBeanCountImporter8SettingsO20payeesUserDefaultKeySSvpZ"></a>
-                    <a name="//apple_ref/swift/Variable/payeesUserDefaultKey" class="dashAnchor"></a>
-                    <a class="token" href="#/s:22SwiftBeanCountImporter8SettingsO20payeesUserDefaultKeySSvpZ">payeesUserDefaultKey</a>
+                    <a name="/s:22SwiftBeanCountImporter8SettingsO7storageAA0E7Storage_pvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/storage" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter8SettingsO7storageAA0E7Storage_pvpZ">storage</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -129,19 +125,21 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p><code>UserDefaults</code> key for the payee mapping</p>
+                        <p>A Storage which saves the settings</p>
+
+<p>Default value is <code>UserDefaults.standard</code></p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">payeesUserDefaultKey</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">storage</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SettingsStorage.html">SettingsStorage</a></span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Settings.swift#L15">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Settings.swift#L48">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -149,9 +147,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:22SwiftBeanCountImporter8SettingsO23accountsUserDefaultsKeySSvpZ"></a>
-                    <a name="//apple_ref/swift/Variable/accountsUserDefaultsKey" class="dashAnchor"></a>
-                    <a class="token" href="#/s:22SwiftBeanCountImporter8SettingsO23accountsUserDefaultsKeySSvpZ">accountsUserDefaultsKey</a>
+                    <a name="/s:22SwiftBeanCountImporter8SettingsO22allDescriptionMappingsSDyS2SGvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/allDescriptionMappings" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter8SettingsO22allDescriptionMappingsSDyS2SGvpZ">allDescriptionMappings</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -159,19 +157,25 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p><code>UserDefaults</code> key for the account mapping</p>
+                        <p>Mappings of descriptions the user saved when importing previous transactions</p>
+
+<p>These are automatically applied when importing and are only exported to allow apps
+to offer a settings screen to view and modify them.</p>
+
+<p>Keys are the original descriptions from the importer and the value are the new descriptions
+the user mapped them to</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">accountsUserDefaultsKey</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">allDescriptionMappings</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Settings.swift#L17">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Settings.swift#L57-L59">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -179,9 +183,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:22SwiftBeanCountImporter8SettingsO26descriptionUserDefaultsKeySSvpZ"></a>
-                    <a name="//apple_ref/swift/Variable/descriptionUserDefaultsKey" class="dashAnchor"></a>
-                    <a class="token" href="#/s:22SwiftBeanCountImporter8SettingsO26descriptionUserDefaultsKeySSvpZ">descriptionUserDefaultsKey</a>
+                    <a name="/s:22SwiftBeanCountImporter8SettingsO16allPayeeMappingsSDyS2SGvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/allPayeeMappings" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter8SettingsO16allPayeeMappingsSDyS2SGvpZ">allPayeeMappings</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -189,19 +193,25 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p><code>UserDefaults</code> key for the description mapping</p>
+                        <p>Mappings of payees the user saved when importing previous transactions</p>
+
+<p>These are automatically applied when importing and are only exported to allow apps
+to offer a settings screen to view and modify them.</p>
+
+<p>Keys are the original descriptions from the importer and the values are the new payees
+the user mapped them to</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">descriptionUserDefaultsKey</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">allPayeeMappings</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Settings.swift#L19">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Settings.swift#L68-L70">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -209,9 +219,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:22SwiftBeanCountImporter8SettingsO28dateToleranceUserDefaultsKeySSvpZ"></a>
-                    <a name="//apple_ref/swift/Variable/dateToleranceUserDefaultsKey" class="dashAnchor"></a>
-                    <a class="token" href="#/s:22SwiftBeanCountImporter8SettingsO28dateToleranceUserDefaultsKeySSvpZ">dateToleranceUserDefaultsKey</a>
+                    <a name="/s:22SwiftBeanCountImporter8SettingsO18allAccountMappingsSDyS2SGvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/allAccountMappings" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter8SettingsO18allAccountMappingsSDyS2SGvpZ">allAccountMappings</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -219,19 +229,24 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p><code>UserDefaults</code> key for the date tolerance to detect duplicate transactions</p>
+                        <p>Mappings of accounts the user saved when importing previous transactions</p>
+
+<p>These are automatically applied when importing and are only exported to allow apps
+to offer a settings screen to view and modify them.</p>
+
+<p>Keys are payees and the values are account name strings the user mapped them to</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">dateToleranceUserDefaultsKey</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">allAccountMappings</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Settings.swift#L21">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Settings.swift#L78-L80">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -239,9 +254,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:22SwiftBeanCountImporter8SettingsO20defaultDateToleranceSivpZ"></a>
-                    <a name="//apple_ref/swift/Variable/defaultDateTolerance" class="dashAnchor"></a>
-                    <a class="token" href="#/s:22SwiftBeanCountImporter8SettingsO20defaultDateToleranceSivpZ">defaultDateTolerance</a>
+                    <a name="/s:22SwiftBeanCountImporter8SettingsO13dateToleranceSdvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/dateTolerance" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter8SettingsO13dateToleranceSdvpZ">dateTolerance</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -249,19 +264,249 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Default date tolerance to detect duplicate transactions</p>
+                        <p>See also <code><a href="../Enums/Settings.html#/s:22SwiftBeanCountImporter8SettingsO19dateToleranceInDaysSivpZ">dateToleranceInDays</a></code> which offers this value as Int</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">defaultDateTolerance</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">dateTolerance</span><span class="p">:</span> <span class="kt">TimeInterval</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Settings.swift#L24">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Settings.swift#L85-L87">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:22SwiftBeanCountImporter8SettingsO19dateToleranceInDaysSivpZ"></a>
+                    <a name="//apple_ref/swift/Variable/dateToleranceInDays" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter8SettingsO19dateToleranceInDaysSivpZ">dateToleranceInDays</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Date tolerance in days to check for duplicate transactions when importing</p>
+
+<p>See also <code><a href="../Enums/Settings.html#/s:22SwiftBeanCountImporter8SettingsO13dateToleranceSdvpZ">dateTolerance</a></code> which offers this value as <code>TimeInterval</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">dateToleranceInDays</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Settings.swift#L92-L103">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:22SwiftBeanCountImporter8SettingsO21setDescriptionMapping3key11descriptionySS_SSSgtFZ"></a>
+                    <a name="//apple_ref/swift/Method/setDescriptionMapping(key:description:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter8SettingsO21setDescriptionMapping3key11descriptionySS_SSSgtFZ">setDescriptionMapping(key:<wbr>description:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Save a new mapping of a description the user wants to automatically apply to
+new transactions</p>
+
+<p>Note: Do not use this function to save the mapping for an imported transaction
+(use the functions on <code><a href="../Structs/ImportedTransaction.html">ImportedTransaction</a></code> instead), but only for adjustments
+made on a settings screen.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">setDescriptionMapping</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>original description of the imported transaction</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>description</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>new description - Use nil to delete a mapping.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Settings.swift#L115-L119">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:22SwiftBeanCountImporter8SettingsO15setPayeeMapping3key5payeeySS_SSSgtFZ"></a>
+                    <a name="//apple_ref/swift/Method/setPayeeMapping(key:payee:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter8SettingsO15setPayeeMapping3key5payeeySS_SSSgtFZ">setPayeeMapping(key:<wbr>payee:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Save a new mapping of a payee the user wants to automatically apply to
+new transactions with a certain description</p>
+
+<p>Note: Do not use this function to save the mapping for an imported transaction
+(use the functions on <code><a href="../Structs/ImportedTransaction.html">ImportedTransaction</a></code> instead), but only for adjustments
+made on a settings screen.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">setPayeeMapping</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">payee</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>original description of an imported transaction</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>payee</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>payee to map transactions with this description to. Use nil to delete a mapping.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Settings.swift#L131-L135">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:22SwiftBeanCountImporter8SettingsO17setAccountMapping3key7accountySS_SSSgtFZ"></a>
+                    <a name="//apple_ref/swift/Method/setAccountMapping(key:account:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter8SettingsO17setAccountMapping3key7accountySS_SSSgtFZ">setAccountMapping(key:<wbr>account:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Save a new mapping of an account the user wants to automatically apply to
+new transactions from a certain payee</p>
+
+<p>Note: Do not use this function to save the mapping for an imported transaction
+(use the functions on <code><a href="../Structs/ImportedTransaction.html">ImportedTransaction</a></code> instead), but only for adjustments
+made on a settings screen.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">setAccountMapping</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">account</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>key</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>payee</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>account</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>account name string - Use nil to delete a mapping</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Settings.swift#L147-L151">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -274,7 +519,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/Nef10" target="_blank" rel="noopener" rel="external">Nef10</a>. All rights reserved. (Last updated: 2021-08-22)</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/Nef10" target="_blank" rel="noopener" rel="external">Nef10</a>. All rights reserved. (Last updated: 2021-09-13)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="noopener" rel="external">jazzy ♪♫ v0.14.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="noopener" rel="external">Realm</a> project.</p>
     </section>
   </body>
