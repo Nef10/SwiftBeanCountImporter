@@ -58,7 +58,7 @@ public enum ImporterFactory {
     ///             e.g. to read attributes of accounts
     ///   - name: Name of the importer to initialize
     /// - Returns: Importer, or nil if an importer with this name cannot be found
-    public static func new(ledger: Ledger, name: String) -> Importer? {
+    public static func new(ledger: Ledger?, name: String) -> Importer? {
         DownloadImporterFactory.new(ledger: ledger, name: name)
     }
 
