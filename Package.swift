@@ -31,7 +31,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/Nef10/WealthsimpleDownloader.git",
-            .upToNextMajor(from: "1.0.7")
+            .upToNextMajor(from: "1.1.0")
         ),
     ],
     targets: [
