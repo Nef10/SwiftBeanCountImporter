@@ -22,7 +22,7 @@ final class DownloadImporterTests: XCTestCase {
 
         let importers = DownloadImporterFactory.importers
         for importer in importers {
-            XCTAssertTrue(type(of: DownloadImporterFactory.new(ledger: Ledger(), name: importer.importerName)!) == importer)
+            XCTAssertTrue(type(of: DownloadImporterFactory.new(ledger: nil, name: importer.importerName)!) == importer)
         }
     }
 

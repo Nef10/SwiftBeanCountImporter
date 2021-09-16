@@ -63,10 +63,17 @@ final class ImporterTests: XCTestCase {
         }
     }
 
-     func testTextImporter() {
+    func testTextImporter() {
         let result = ImporterFactory.new(ledger: nil, transaction: "", balance: "")
         XCTAssertNotNil(result)
         XCTAssertTrue(result is ManuLifeImporter)
+    }
+
+    func testDownloadImporter() {
+        let importers = DownloadImporterFactory.importers
+        for importer in importers {
+            XCTAssertTrue(type(of: ImporterFactory.new(ledger: nil, name: importer.importerName)!) == importer)
+        }
     }
 
     func testImportedTransactionSaveMapped() {
