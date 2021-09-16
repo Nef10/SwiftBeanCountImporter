@@ -22,7 +22,7 @@ enum DownloadImporterFactory {
     ///             e.g. to read attributes of accounts
     ///   - name: Name of the importer to initialize
     /// - Returns: DownloadImporter, or nil if an importer with this name cannot be found
-    static func new(ledger: Ledger, name: String) -> DownloadImporter? {
+    static func new(ledger: Ledger?, name: String) -> DownloadImporter? {
         guard let importerClass = (Self.importers.first { $0.importerName == name }) else {
             return nil
         }
@@ -31,6 +31,6 @@ enum DownloadImporterFactory {
 
 }
 
-protocol DownloadImporter: TextImporter {
-    init(ledger: Ledger)
+protocol DownloadImporter: Importer {
+    init(ledger: Ledger?)
 }

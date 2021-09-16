@@ -41,9 +41,9 @@ class WealthsimpleImporter: BaseImporter, DownloadImporter {
     private var balances = [Balance]()
     private var prices = [Price]()
 
-    required init(ledger: Ledger) {
-        existingLedger = ledger
-        mapper = WealthsimpleLedgerMapper(ledger: ledger)
+    override required init(ledger: Ledger?) {
+        existingLedger = ledger ?? Ledger()
+        mapper = WealthsimpleLedgerMapper(ledger: existingLedger)
         super.init(ledger: ledger)
     }
 
