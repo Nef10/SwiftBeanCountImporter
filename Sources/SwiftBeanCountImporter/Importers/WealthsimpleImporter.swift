@@ -36,6 +36,7 @@ class WealthsimpleImporter: BaseImporter, DownloadImporter {
 
     private var positionSubscription: AnyCancellable?
     private var transactionSubscription: AnyCancellable?
+
     /// Results
     private var transactions = [ImportedTransaction]()
     private var balances = [Balance]()
@@ -154,7 +155,12 @@ class WealthsimpleImporter: BaseImporter, DownloadImporter {
 
     private func mapTransactions(_ transactions: [SwiftBeanCountModel.Transaction], _ completion: @escaping () -> Void) {
         self.transactions = transactions.map {
-            ImportedTransaction(transaction: $0, originalDescription: "", possibleDuplicate: nil, shouldAllowUserToEdit: false, accountName: nil)
+            if $0.postings.contains(where: { $0.accountName == WealthsimpleLedgerMapper.fallbackExpenseAccountName }) {
+                return ImportedTransaction($0,
+                                           shouldAllowUserToEdit: true,
+                                           accountName: $0.postings.first { $0.accountName != WealthsimpleLedgerMapper.fallbackExpenseAccountName }!.accountName)
+            }
+            return ImportedTransaction($0)
         }
         completion()
     }

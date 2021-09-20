@@ -90,6 +90,20 @@ public struct ImportedTransaction {
     /// Note: Not set on imported transactions which have shouldAllowUserToEdit set to false
     public let accountName: AccountName?
 
+    init(
+        _ transaction: Transaction,
+        originalDescription: String = "",
+        possibleDuplicate: Transaction? = nil,
+        shouldAllowUserToEdit: Bool = false,
+        accountName: AccountName? = nil
+    ) {
+        self.transaction = transaction
+        self.originalDescription = originalDescription
+        self.possibleDuplicate = possibleDuplicate
+        self.shouldAllowUserToEdit = shouldAllowUserToEdit
+        self.accountName = accountName
+    }
+
     /// Saves a mapping of an imported transaction description to a different
     /// description, payee as well as account name
     ///
@@ -101,6 +115,9 @@ public struct ImportedTransaction {
     ///   - payee: new payee to use next time a transaction with the same origial description is imported
     ///   - accountName: accountName to use next time a transaction with this payee is imported
     public func saveMapped(description: String, payee: String, accountName: AccountName?) {
+        guard !originalDescription.isEmpty else {
+            return
+        }
         if !payee.isEmpty {
             Settings.setPayeeMapping(key: originalDescription, payee: payee)
             if let accountName = accountName {

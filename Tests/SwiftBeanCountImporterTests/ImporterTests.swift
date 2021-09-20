@@ -87,16 +87,22 @@ final class ImporterTests: XCTestCase {
         let accountName = TestUtils.cash
         Settings.storage = TestStorage()
 
-        let importedTransaction = ImportedTransaction(transaction: TestUtils.transaction,
-                                                      originalDescription: originalDescription,
-                                                      possibleDuplicate: nil,
-                                                      shouldAllowUserToEdit: true,
-                                                      accountName: nil)
+        // Does not save if originalDescription is an empty string
+        var importedTransaction = ImportedTransaction(TestUtils.transaction, originalDescription: "", shouldAllowUserToEdit: true)
+        importedTransaction.saveMapped(description: description, payee: payee, accountName: accountName)
+
+        XCTAssert(Settings.allDescriptionMappings.isEmpty)
+        XCTAssert(Settings.allPayeeMappings.isEmpty)
+        XCTAssert(Settings.allAccountMappings.isEmpty)
+
+        // Saves otherwise
+        importedTransaction = ImportedTransaction(TestUtils.transaction, originalDescription: originalDescription, shouldAllowUserToEdit: true)
         importedTransaction.saveMapped(description: description, payee: payee, accountName: accountName)
 
         XCTAssertEqual(Settings.allDescriptionMappings, [originalDescription: description])
         XCTAssertEqual(Settings.allPayeeMappings, [originalDescription: payee])
         XCTAssertEqual(Settings.allAccountMappings, [payee: accountName.fullName])
+
     }
 
 }
