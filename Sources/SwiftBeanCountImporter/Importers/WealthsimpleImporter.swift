@@ -6,7 +6,6 @@
 //  Copyright © 2021 Steffen Kötte. All rights reserved.
 //
 
-import Combine
 import Foundation
 import SwiftBeanCountModel
 import SwiftBeanCountWealthsimpleMapper
@@ -25,17 +24,12 @@ class WealthsimpleImporter: BaseImporter, DownloadImporter {
     override var importName: String { "Wealthsimple Download" }
 
     private let existingLedger: Ledger
-    private let sixtyTwoDays = -60 * 60 * 24 * 62.0
-    private let positionPublisher = PassthroughSubject<[Position], Position.PositionError>()
-    private let transactionPublisher = PassthroughSubject<[Wealthsimple.Transaction], Wealthsimple.Transaction.TransactionError>()
+    private let sixtyTwoDays = -60 * 60 * 24 * 364.0
 
     private var downloader: WealthsimpleDownloader!
     private var mapper: WealthsimpleLedgerMapper
 
     private var downloadedAccounts = [Wealthsimple.Account]()
-
-    private var positionSubscription: AnyCancellable?
-    private var transactionSubscription: AnyCancellable?
 
     /// Results
     private var transactions = [ImportedTransaction]()
@@ -81,75 +75,87 @@ class WealthsimpleImporter: BaseImporter, DownloadImporter {
             case let .success(accounts):
                 self.downloadedAccounts = accounts
                 self.mapper.accounts = accounts
-                self.downloadPositions(completion)
+                DispatchQueue.global(qos: .userInitiated).async {
+                    self.downloadPositions(completion)
+                }
             }
         }
     }
 
     private func downloadPositions(_ completion: @escaping () -> Void) {
-        positionSubscription = positionPublisher
-            .tryMap { value -> ([Price], [Balance]) in
-                try self.mapper.mapPositionsToPriceAndBalance(value)
-            }
-            .collect(downloadedAccounts.count)
-            .sink(receiveCompletion: { receivedCompletion in
-                if case let .failure(error) = receivedCompletion {
-                    self.delegate?.error(error)
-                }
-                completion()
-            }, receiveValue: { values in
-                for (accountPrices, accountBalances) in values {
-                    self.prices.append(contentsOf: accountPrices)
-                    self.balances.append(contentsOf: accountBalances)
-                }
-                self.downloadTransactions(completion)
-            })
+        let group = DispatchGroup()
+        var errorOccurred = false
 
         downloadedAccounts.forEach { account in
+            group.enter()
             DispatchQueue.global(qos: .userInitiated).async {
                 self.downloader.getPositions(in: account, date: nil) { result in
                     switch result {
                     case let .failure(error):
-                        self.positionPublisher.send(completion: .failure(error))
+                        self.delegate?.error(error)
+                        errorOccurred = true
+                        group.leave()
+                        completion()
                     case let .success(positions):
-                        self.positionPublisher.send(positions)
+                        do {
+                            defer {
+                                group.leave()
+                            }
+                            let (accountPrices, accountBalances) = try self.mapper.mapPositionsToPriceAndBalance(positions)
+                            self.prices.append(contentsOf: accountPrices)
+                            self.balances.append(contentsOf: accountBalances)
+                        } catch {
+                            self.delegate?.error(error)
+                            errorOccurred = true
+                            completion()
+                        }
                     }
                 }
             }
         }
+
+        group.wait()
+        if !errorOccurred {
+            self.downloadTransactions(completion)
+        }
     }
 
     private func downloadTransactions(_ completion: @escaping () -> Void) {
-        transactionSubscription = transactionPublisher
-            .tryMap { value -> ([Price], [SwiftBeanCountModel.Transaction]) in
-                try self.mapper.mapTransactionsToPriceAndTransactions(value)
-            }
-            .collect(downloadedAccounts.count)
-            .sink(receiveCompletion: { receivedCompletion in
-                if case let .failure(error) = receivedCompletion {
-                    self.delegate?.error(error)
-                }
-                completion()
-            }, receiveValue: { values in
-                var downloadedTransactions = [SwiftBeanCountModel.Transaction]()
-                for (accountPrices, accountTransactions) in values {
-                    self.prices.append(contentsOf: accountPrices)
-                    downloadedTransactions.append(contentsOf: accountTransactions)
-                }
-                self.mapTransactions(downloadedTransactions, completion)
-            })
+        let group = DispatchGroup()
+        var downloadedTransactions = [SwiftBeanCountModel.Transaction]()
+        var errorOccurred = false
 
         downloadedAccounts.forEach { account in
+            group.enter()
             DispatchQueue.global(qos: .userInitiated).async {
                 self.downloader.getTransactions(in: account, startDate: Date(timeIntervalSinceNow: self.sixtyTwoDays )) { result in
                     switch result {
                     case let .failure(error):
-                        self.transactionPublisher.send(completion: .failure(error))
+                        self.delegate?.error(error)
+                        errorOccurred = true
+                        group.leave()
+                        completion()
                     case let .success(transactions):
-                        self.transactionPublisher.send(transactions)
+                        do {
+                            defer {
+                                group.leave()
+                            }
+                            let (accountPrices, accountTransactions) = try self.mapper.mapTransactionsToPriceAndTransactions(transactions)
+                            self.prices.append(contentsOf: accountPrices)
+                            downloadedTransactions.append(contentsOf: accountTransactions)
+                        } catch {
+                            self.delegate?.error(error)
+                            errorOccurred = true
+                            completion()
+                        }
                     }
                 }
             }
+        }
+
+        group.wait()
+        if !errorOccurred {
+            self.mapTransactions(downloadedTransactions, completion)
         }
     }
 
