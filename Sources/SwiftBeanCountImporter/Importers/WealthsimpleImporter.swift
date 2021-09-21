@@ -56,7 +56,7 @@ class WealthsimpleImporter: BaseImporter, DownloadImporter {
     }
 
     override func load() {
-        downloader = downloaderClass.init(authenticationCallback: authenticationCallback, credentialStorage: self) // swiftlint:disable:this explicit_init
+        downloader = downloaderClass.init(authenticationCallback: authenticationCallback, credentialStorage: self)
 
         let group = DispatchGroup()
         group.enter()
