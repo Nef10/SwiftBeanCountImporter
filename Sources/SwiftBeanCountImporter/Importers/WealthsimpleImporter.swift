@@ -11,6 +11,18 @@ import SwiftBeanCountModel
 import SwiftBeanCountWealthsimpleMapper
 import Wealthsimple
 
+protocol WealthsimpleDownloaderProvider {
+    init(authenticationCallback: @escaping WealthsimpleDownloader.AuthenticationCallback, credentialStorage: CredentialStorage)
+    func authenticate(completion: @escaping (Error?) -> Void)
+    func getAccounts(completion: @escaping (Result<[Wealthsimple.Account], Wealthsimple.Account.AccountError>) -> Void)
+    func getPositions(in account: Wealthsimple.Account, date: Date?, completion: @escaping (Result<[Wealthsimple.Position], Wealthsimple.Position.PositionError>) -> Void)
+    func getTransactions(
+        in account: Wealthsimple.Account,
+        startDate: Date?,
+        completion: @escaping (Result<[Wealthsimple.Transaction], Wealthsimple.Transaction.TransactionError>) -> Void
+    )
+}
+
 class WealthsimpleImporter: BaseImporter, DownloadImporter {
 
     override class var importerName: String { "Wealthsimple" }
@@ -22,11 +34,12 @@ class WealthsimpleImporter: BaseImporter, DownloadImporter {
     }
 
     override var importName: String { "Wealthsimple Download" }
+    var downloaderClass: WealthsimpleDownloaderProvider.Type = WealthsimpleDownloader.self
 
     private let existingLedger: Ledger
     private let sixtyTwoDays = -60 * 60 * 24 * 364.0
 
-    private var downloader: WealthsimpleDownloader!
+    private var downloader: WealthsimpleDownloaderProvider!
     private var mapper: WealthsimpleLedgerMapper
 
     private var downloadedAccounts = [Wealthsimple.Account]()
@@ -43,7 +56,7 @@ class WealthsimpleImporter: BaseImporter, DownloadImporter {
     }
 
     override func load() {
-        downloader = WealthsimpleDownloader(authenticationCallback: authenticationCallback, credentialStorage: self)
+        downloader = downloaderClass.init(authenticationCallback: authenticationCallback, credentialStorage: self) // swiftlint:disable:this explicit_init
 
         let group = DispatchGroup()
         group.enter()
@@ -227,4 +240,7 @@ extension WealthsimpleImporter: CredentialStorage {
         self.delegate?.readCredential("\(Self.importerType)-\(key)")
     }
 
+}
+
+extension WealthsimpleDownloader: WealthsimpleDownloaderProvider {
 }

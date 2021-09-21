@@ -1,0 +1,262 @@
+//
+//  WealthsimpleImporterTests.swift
+//  SwiftBeanCountImporterTests
+//
+//  Created by Steffen Kötte on 2021-09-20.
+//  Copyright © 2021 Steffen Kötte. All rights reserved.
+//
+
+@testable import SwiftBeanCountImporter
+import SwiftBeanCountModel
+import Wealthsimple
+import XCTest
+
+protocol EquatableError: Error, Equatable {
+}
+
+struct TestError: EquatableError {
+    let id = UUID()
+}
+
+class ErrorDelegate<T: EquatableError> {
+    let error: T
+    var verified = false
+
+    init(error: T) {
+        self.error = error
+    }
+}
+
+class CredentialDelegate {
+    var verifiedSave = false
+    var verifiedRead = false
+}
+
+class AuthenticationDelegate {
+    let names = ["Username", "Password", "OTP"]
+    let secrets = [false, true, false]
+
+    var verified = false
+    var index = 0
+}
+
+final class WealthsimpleImporterTests: XCTestCase {
+
+    static var downloader: TestDownloader!
+    static var authenticate: (() -> Error?)?
+    static var getAccounts: (() -> Result<[Wealthsimple.Account], Wealthsimple.Account.AccountError>)?
+    static var getPositions: ((Wealthsimple.Account, Date?) -> Result<[Position], Position.PositionError>)?
+    static var getTransactions: ((Wealthsimple.Account, Date?) -> Result<[Wealthsimple.Transaction], Wealthsimple.Transaction.TransactionError>)?
+    static var authenticationCallback: WealthsimpleDownloader.AuthenticationCallback!
+    static var credentialStorage: CredentialStorage!
+
+    struct TestDownloader: WealthsimpleDownloaderProvider {
+
+        init(authenticationCallback: @escaping WealthsimpleDownloader.AuthenticationCallback, credentialStorage: CredentialStorage) {
+            WealthsimpleImporterTests.authenticationCallback = authenticationCallback
+            WealthsimpleImporterTests.credentialStorage = credentialStorage
+            downloader = self
+        }
+
+        func authenticate(completion: @escaping (Error?) -> Void) {
+            completion(WealthsimpleImporterTests.authenticate?())
+        }
+
+        func getAccounts(completion: @escaping (Result<[Wealthsimple.Account], Wealthsimple.Account.AccountError>) -> Void) {
+            completion(WealthsimpleImporterTests.getAccounts?() ?? .success([]))
+        }
+
+        func getPositions(in account: Wealthsimple.Account, date: Date?, completion: @escaping (Result<[Position], Position.PositionError>) -> Void) {
+            completion(WealthsimpleImporterTests.getPositions?(account, date) ?? .success([]))
+        }
+
+        func getTransactions(in account: Wealthsimple.Account, startDate: Date?, completion: @escaping (Result<[Wealthsimple.Transaction], Wealthsimple.Transaction.TransactionError>) -> Void) {
+            completion(WealthsimpleImporterTests.getTransactions?(account, startDate) ?? .success([]))
+        }
+    }
+
+    override func setUpWithError() throws {
+        Self.downloader = nil
+        Self.authenticate = nil
+        Self.getAccounts = nil
+        Self.getPositions = nil
+        Self.getTransactions = nil
+        Self.authenticationCallback = nil
+        Self.credentialStorage = nil
+        try super.setUpWithError()
+    }
+
+    func testImporterName() {
+        XCTAssertEqual(WealthsimpleImporter.importerName, "Wealthsimple")
+    }
+
+    func testImporterType() {
+        XCTAssertEqual(WealthsimpleImporter.importerType, "wealthsimple")
+    }
+
+    func testHelpText() {
+        XCTAssertEqual(WealthsimpleImporter.helpText,
+                       "TODO")
+    }
+
+    func testImportName() {
+        XCTAssertEqual(WealthsimpleImporter(ledger: nil).importName, "Wealthsimple Download")
+    }
+
+    func testNoData() {
+        let importer = WealthsimpleImporter(ledger: nil)
+        importer.downloaderClass = TestDownloader.self
+        importer.load()
+        XCTAssertNil(importer.nextTransaction())
+        XCTAssert(importer.balancesToImport().isEmpty)
+        XCTAssert(importer.pricesToImport().isEmpty)
+    }
+
+    func testLoadAuthenticationError() {
+        let importer = WealthsimpleImporter(ledger: nil)
+        let error = TestError()
+        let delegate = ErrorDelegate(error: error)
+        Self.authenticate = { error }
+        importer.delegate = delegate
+        importer.downloaderClass = TestDownloader.self
+        importer.load()
+        XCTAssert(delegate.verified)
+    }
+
+    func testLoadAccountError() {
+        let importer = WealthsimpleImporter(ledger: nil)
+        let error = Wealthsimple.Account.AccountError.httpError(error: "TESTErrorString")
+        let delegate = ErrorDelegate(error: error)
+        Self.getAccounts = { .failure(error) }
+        importer.delegate = delegate
+        importer.downloaderClass = TestDownloader.self
+        importer.load()
+        XCTAssert(delegate.verified)
+    }
+
+    func testCredentialStorage() {
+        let importer = WealthsimpleImporter(ledger: nil)
+        let delegate = CredentialDelegate()
+        importer.delegate = delegate
+        importer.downloaderClass = TestDownloader.self
+        importer.load()
+        _ = Self.credentialStorage.read("testKey")
+        XCTAssert(delegate.verifiedRead)
+        XCTAssertFalse(delegate.verifiedSave)
+        Self.credentialStorage.save("testValue", for: "testKey2")
+        XCTAssert(delegate.verifiedSave)
+    }
+
+    func testAuthenticationCallback() {
+        let expectation = XCTestExpectation(description: "authenticationCallback called")
+        let importer = WealthsimpleImporter(ledger: nil)
+        let delegate = AuthenticationDelegate()
+        importer.delegate = delegate
+        importer.downloaderClass = TestDownloader.self
+        importer.load()
+        Self.authenticationCallback {
+            XCTAssertEqual($0, "testUserName")
+            XCTAssertEqual($1, "testPassword")
+            XCTAssertEqual($2, "testOTP")
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 10.0)
+        XCTAssert(delegate.verified)
+    }
+
+}
+
+extension Wealthsimple.Account.AccountError: EquatableError {
+    public static func == (lhs: Wealthsimple.Account.AccountError, rhs: Wealthsimple.Account.AccountError) -> Bool {
+        switch (lhs, rhs) {
+        case (let .httpError(lhsString), let .httpError(rhsString)):
+            return lhsString == rhsString
+        case (let .invalidJson(lhsString), let .invalidJson(rhsString)):
+            return lhsString == rhsString
+        default:
+            return false
+        }
+    }
+
+}
+
+extension ErrorDelegate: ImporterDelegate {
+
+    func requestInput(name: String, suggestions: [String], isSecret: Bool, completion: (String) -> Bool) {
+        XCTFail("requestInput should not be called")
+    }
+
+    func saveCredential(_ value: String, for key: String) {
+        XCTFail("saveCredential should not be called")
+    }
+
+    func readCredential(_ key: String) -> String? {
+        XCTFail("readCredential should not be called")
+        return nil
+    }
+
+    func error(_ error: Error) {
+        XCTAssertEqual(error as! T, self.error)
+        verified = true
+    }
+
+}
+
+extension CredentialDelegate: ImporterDelegate {
+
+    func requestInput(name: String, suggestions: [String], isSecret: Bool, completion: (String) -> Bool) {
+        XCTFail("requestInput should not be called")
+    }
+
+    func saveCredential(_ value: String, for key: String) {
+        XCTAssertEqual(key, "wealthsimple-testKey2")
+        XCTAssertEqual(value, "testValue")
+        verifiedSave = true
+    }
+
+    func readCredential(_ key: String) -> String? {
+        XCTAssertEqual(key, "wealthsimple-testKey")
+        verifiedRead = true
+        return nil
+    }
+
+    func error(_ error: Error) {
+        XCTFail("error should not be called")
+
+    }
+}
+
+extension AuthenticationDelegate: ImporterDelegate {
+
+    func requestInput(name: String, suggestions: [String], isSecret: Bool, completion: (String) -> Bool) {
+        XCTAssertEqual(name, names[index])
+        XCTAssert(suggestions.isEmpty)
+        XCTAssertEqual(isSecret, secrets[index])
+        switch index {
+        case 0:
+            XCTAssert(completion("testUserName"))
+        case 1:
+            XCTAssert(completion("testPassword"))
+        case 2:
+            XCTAssert(completion("testOTP"))
+            verified = true
+        default:
+            XCTFail("Caled requestInput too often")
+        }
+        index += 1
+    }
+
+    func saveCredential(_ value: String, for key: String) {
+        XCTFail("saveCredential should not be called")
+    }
+
+    func readCredential(_ key: String) -> String? {
+        XCTFail("readCredential should not be called")
+        return nil
+    }
+
+    func error(_ error: Error) {
+        XCTFail("error should not be called")
+
+    }
+}
