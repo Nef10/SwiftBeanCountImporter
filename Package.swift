@@ -24,11 +24,11 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/Nef10/SwiftBeanCountWealthsimpleMapper.git",
-            .upToNextMajor(from: "1.3.0")
+            .upToNextMajor(from: "1.4.1")
         ),
         .package(
             url: "https://github.com/Nef10/WealthsimpleDownloader.git",
-            .upToNextMajor(from: "1.1.1")
+            .upToNextMajor(from: "2.0.0")
         ),
     ],
     targets: [

@@ -49,6 +49,13 @@ class CredentialDelegate: BaseTestImporterDelegate {
     }
 }
 
+struct TestAccount: Wealthsimple.Account {
+    var accountType = Wealthsimple.AccountType.nonRegistered
+    var currency = "CAD"
+    var id = "id123"
+    var number = "A1B2"
+}
+
 class AuthenticationDelegate: BaseTestImporterDelegate {
     let names = ["Username", "Password", "OTP"]
     let secrets = [false, true, false]
@@ -89,18 +96,18 @@ final class WealthsimpleImporterTests: XCTestCase {
             completion(WealthsimpleImporterTests.authenticate?())
         }
 
-        func getAccounts(completion: @escaping (Result<[Wealthsimple.Account], Wealthsimple.Account.AccountError>) -> Void) {
+        func getAccounts(completion: @escaping (Result<[Wealthsimple.Account], Wealthsimple.AccountError>) -> Void) {
             completion(WealthsimpleImporterTests.getAccounts?() ?? .success([]))
         }
 
-        func getPositions(in account: Wealthsimple.Account, date: Date?, completion: @escaping (Result<[Position], Position.PositionError>) -> Void) {
+        func getPositions(in account: Wealthsimple.Account, date: Date?, completion: @escaping (Result<[Position], PositionError>) -> Void) {
             completion(WealthsimpleImporterTests.getPositions?(account, date) ?? .success([]))
         }
 
         func getTransactions(
             in account: Wealthsimple.Account,
             startDate: Date?,
-            completion: @escaping (Result<[Wealthsimple.Transaction], Wealthsimple.Transaction.TransactionError>) -> Void
+            completion: @escaping (Result<[Wealthsimple.Transaction], Wealthsimple.TransactionError>) -> Void
         ) {
             completion(WealthsimpleImporterTests.getTransactions?(account, startDate) ?? .success([]))
         }
@@ -108,9 +115,9 @@ final class WealthsimpleImporterTests: XCTestCase {
 
     private static var downloader: TestDownloader!
     private static var authenticate: (() -> Error?)?
-    private static var getAccounts: (() -> Result<[Wealthsimple.Account], Wealthsimple.Account.AccountError>)?
-    private static var getPositions: ((Wealthsimple.Account, Date?) -> Result<[Position], Position.PositionError>)?
-    private static var getTransactions: ((Wealthsimple.Account, Date?) -> Result<[Wealthsimple.Transaction], Wealthsimple.Transaction.TransactionError>)?
+    private static var getAccounts: (() -> Result<[Wealthsimple.Account], Wealthsimple.AccountError>)?
+    private static var getPositions: ((Wealthsimple.Account, Date?) -> Result<[Position], PositionError>)?
+    private static var getTransactions: ((Wealthsimple.Account, Date?) -> Result<[Wealthsimple.Transaction], TransactionError>)?
     private static var authenticationCallback: WealthsimpleDownloader.AuthenticationCallback!
     private static var credentialStorage: CredentialStorage!
 
@@ -164,13 +171,32 @@ final class WealthsimpleImporterTests: XCTestCase {
 
     func testLoadAccountError() {
         let importer = WealthsimpleImporter(ledger: nil)
-        let error = Wealthsimple.Account.AccountError.httpError(error: "TESTErrorString")
+        let error = AccountError.httpError(error: "TESTErrorString")
         let delegate = ErrorDelegate(error: error)
         Self.getAccounts = { .failure(error) }
         importer.delegate = delegate
         importer.downloaderClass = TestDownloader.self
         importer.load()
         XCTAssert(delegate.verified)
+    }
+
+    func testLoadAccount() {
+        let importer = WealthsimpleImporter(ledger: nil)
+        var verified = false
+        let account = TestAccount()
+        Self.getAccounts = { .success([account]) }
+        Self.getPositions = { requestedAccount, _ in
+            XCTAssertEqual(requestedAccount.id, account.id)
+            XCTAssertEqual(requestedAccount.number, account.number)
+            verified = true
+            return .success([])
+        }
+        importer.downloaderClass = TestDownloader.self
+        importer.load()
+        XCTAssert(verified)
+        XCTAssertNil(importer.nextTransaction())
+        XCTAssert(importer.balancesToImport().isEmpty)
+        XCTAssert(importer.pricesToImport().isEmpty)
     }
 
     func testCredentialStorage() {
@@ -205,8 +231,8 @@ final class WealthsimpleImporterTests: XCTestCase {
 
 }
 
-extension Wealthsimple.Account.AccountError: EquatableError {
-    public static func == (lhs: Wealthsimple.Account.AccountError, rhs: Wealthsimple.Account.AccountError) -> Bool {
+extension Wealthsimple.AccountError: EquatableError {
+    public static func == (lhs: Wealthsimple.AccountError, rhs: Wealthsimple.AccountError) -> Bool {
         switch (lhs, rhs) {
         case let (.httpError(lhsString), .httpError(rhsString)):
             return lhsString == rhsString

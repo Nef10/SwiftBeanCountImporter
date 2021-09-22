@@ -14,12 +14,12 @@ import Wealthsimple
 protocol WealthsimpleDownloaderProvider {
     init(authenticationCallback: @escaping WealthsimpleDownloader.AuthenticationCallback, credentialStorage: CredentialStorage)
     func authenticate(completion: @escaping (Error?) -> Void)
-    func getAccounts(completion: @escaping (Result<[Wealthsimple.Account], Wealthsimple.Account.AccountError>) -> Void)
-    func getPositions(in account: Wealthsimple.Account, date: Date?, completion: @escaping (Result<[Wealthsimple.Position], Wealthsimple.Position.PositionError>) -> Void)
+    func getAccounts(completion: @escaping (Result<[Wealthsimple.Account], Wealthsimple.AccountError>) -> Void)
+    func getPositions(in account: Wealthsimple.Account, date: Date?, completion: @escaping (Result<[Wealthsimple.Position], Wealthsimple.PositionError>) -> Void)
     func getTransactions(
         in account: Wealthsimple.Account,
         startDate: Date?,
-        completion: @escaping (Result<[Wealthsimple.Transaction], Wealthsimple.Transaction.TransactionError>) -> Void
+        completion: @escaping (Result<[Wealthsimple.Transaction], Wealthsimple.TransactionError>) -> Void
     )
 }
 
