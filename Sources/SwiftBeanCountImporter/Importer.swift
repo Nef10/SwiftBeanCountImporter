@@ -65,7 +65,7 @@ public enum ImporterFactory {
 }
 
 /// Struct describing a transaction which has been imported
-public struct ImportedTransaction {
+public struct ImportedTransaction: Equatable {
 
     /// Transaction which has been imported
     public let transaction: Transaction

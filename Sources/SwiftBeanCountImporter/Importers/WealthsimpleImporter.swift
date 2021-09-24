@@ -111,16 +111,15 @@ class WealthsimpleImporter: BaseImporter, DownloadImporter {
                         completion()
                     case let .success(positions):
                         do {
-                            defer {
-                                group.leave()
-                            }
                             let (accountPrices, accountBalances) = try self.mapper.mapPositionsToPriceAndBalance(positions)
                             self.prices.append(contentsOf: accountPrices)
                             self.balances.append(contentsOf: accountBalances)
+                            group.leave()
                         } catch {
                             self.delegate?.error(error)
                             errorOccurred = true
                             completion()
+                            group.leave()
                         }
                     }
                 }
@@ -150,16 +149,15 @@ class WealthsimpleImporter: BaseImporter, DownloadImporter {
                         completion()
                     case let .success(transactions):
                         do {
-                            defer {
-                                group.leave()
-                            }
                             let (accountPrices, accountTransactions) = try self.mapper.mapTransactionsToPriceAndTransactions(transactions)
                             self.prices.append(contentsOf: accountPrices)
                             downloadedTransactions.append(contentsOf: accountTransactions)
+                            group.leave()
                         } catch {
                             self.delegate?.error(error)
                             errorOccurred = true
                             completion()
+                            group.leave()
                         }
                     }
                 }

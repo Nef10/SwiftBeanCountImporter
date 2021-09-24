@@ -45,7 +45,7 @@ class BaseTestImporterDelegate: ImporterDelegate {
     }
 
     func error(_ error: Error) {
-        XCTFail("error should not be called")
+        XCTFail("error should not be called, received \(error)")
     }
 
 }
@@ -82,6 +82,70 @@ class AccountNameSuggestionVerifier: BaseTestImporterDelegate {
         XCTAssertFalse(isSecret)
         verified = true
         _ = completion(TestUtils.cash.fullName)
+    }
+}
+
+class CredentialDelegate: BaseTestImporterDelegate {
+    var verifiedSave = false
+    var verifiedRead = false
+
+    override func saveCredential(_ value: String, for key: String) {
+        XCTAssertEqual(key, "wealthsimple-testKey2")
+        XCTAssertEqual(value, "testValue")
+        verifiedSave = true
+    }
+
+    override func readCredential(_ key: String) -> String? {
+        XCTAssertEqual(key, "wealthsimple-testKey")
+        verifiedRead = true
+        return nil
+    }
+}
+
+class AuthenticationDelegate: BaseTestImporterDelegate {
+    let names = ["Username", "Password", "OTP"]
+    let secrets = [false, true, false]
+
+    var verified = false
+    var index = 0
+
+    override func requestInput(name: String, suggestions: [String], isSecret: Bool, completion: (String) -> Bool) {
+        XCTAssertEqual(name, names[index])
+        XCTAssert(suggestions.isEmpty)
+        XCTAssertEqual(isSecret, secrets[index])
+        switch index {
+        case 0:
+            XCTAssert(completion("testUserName"))
+        case 1:
+            XCTAssert(completion("testPassword"))
+        case 2:
+            XCTAssert(completion("testOTP"))
+            verified = true
+        default:
+            XCTFail("Caled requestInput too often")
+        }
+        index += 1
+    }
+}
+
+protocol EquatableError: Error, Equatable {
+}
+
+struct TestError: EquatableError {
+    let id = UUID()
+}
+
+class ErrorDelegate<T: EquatableError>: BaseTestImporterDelegate {
+    let error: T
+    var verified = false
+
+    init(error: T) {
+        self.error = error
+    }
+
+    override func error(_ error: Error) {
+        XCTAssertEqual(error as? T, self.error)
+        verified = true
     }
 }
 
