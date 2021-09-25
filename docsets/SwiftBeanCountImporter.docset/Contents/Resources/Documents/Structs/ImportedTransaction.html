@@ -74,6 +74,9 @@
                 <a class="nav-group-task-link" href="../Protocols/Importer.html">Importer</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/ImporterDelegate.html">ImporterDelegate</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Protocols/SettingsStorage.html">SettingsStorage</a>
               </li>
             </ul>
@@ -96,14 +99,14 @@
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">ImportedTransaction</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">ImportedTransaction</span> <span class="p">:</span> <span class="kt">Equatable</span></code></pre>
 
                 </div>
               </div>
             <p>Struct describing a transaction which has been imported</p>
 
               <div class="slightly-smaller">
-                <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L49-L94">Show on GitHub</a>
+                <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L68-L130">Show on GitHub</a>
               </div>
           </div>
         </section>
@@ -137,7 +140,7 @@
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L52">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L71">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -168,7 +171,7 @@ might be a duplicate</p>
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L60">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L79">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -189,7 +192,7 @@ might be a duplicate</p>
                         <p>Indicates if the app should allow the user to edit the imported transaction.</p>
 
 <p>Some importer output transactions which normally do not require edits
-e.g. from stock purchases. These indicate this by settings this value to true.</p>
+e.g. from stock purchases. These indicate this by settings this value to false.</p>
 
                       </div>
                       <div class="declaration">
@@ -201,7 +204,7 @@ e.g. from stock purchases. These indicate this by settings this value to true.</
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L66">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L85">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -234,7 +237,7 @@ Note: Not set on imported transactions which have shouldAllowUserToEdit set to f
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L72">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L91">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -311,7 +314,7 @@ separately for the account and description/payee</p>
                         </table>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L84-L92">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L117-L128">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -324,7 +327,7 @@ separately for the account and description/payee</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2021 <a class="link" href="https://github.com/Nef10" target="_blank" rel="noopener" rel="external">Nef10</a>. All rights reserved. (Last updated: 2021-09-13)</p>
+      <p>&copy; 2021 <a class="link" href="https://github.com/Nef10" target="_blank" rel="noopener" rel="external">Nef10</a>. All rights reserved. (Last updated: 2021-09-25)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="noopener" rel="external">jazzy ♪♫ v0.14.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="noopener" rel="external">Realm</a> project.</p>
     </section>
   </body>
