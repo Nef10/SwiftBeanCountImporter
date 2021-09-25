@@ -1,4 +1,4 @@
-#!/bin/sh -l
+#!/bin/bash
 
 swift test --enable-code-coverage
 echo ""
