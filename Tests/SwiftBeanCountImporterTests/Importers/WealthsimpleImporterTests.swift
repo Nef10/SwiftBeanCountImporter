@@ -94,7 +94,8 @@ final class WealthsimpleImporterTests: XCTestCase { // swiftlint:disable:this ty
     private static var authenticationCallback: WealthsimpleDownloader.AuthenticationCallback!
     private static var credentialStorage: CredentialStorage!
 
-    private let sixtyTwoDays = -60 * 60 * 24 * 364.0
+    private let sixtyTwoDays = -60 * 60 * 24 * 62.0
+    private let threeDays = -60 * 60 * 24 * 3.0
     private let xgroAccount = try! AccountName("Assets:W:XGRO")
 
     override func setUpWithError() throws {
@@ -204,6 +205,25 @@ final class WealthsimpleImporterTests: XCTestCase { // swiftlint:disable:this ty
         XCTAssertNil(importer.nextTransaction())
         XCTAssert(importer.balancesToImport().isEmpty)
         XCTAssert(importer.pricesToImport().isEmpty)
+    }
+
+    func testPastDaysToLoad() {
+        let ledger = Ledger()
+        ledger.custom.append(Custom(date: Date(), name: "wealthsimple-importer", values: ["pastDaysToLoad", "3"]))
+        ledger.custom.append(Custom(date: Date(timeIntervalSinceNow: sixtyTwoDays), name: "wealthsimple-importer", values: ["pastDaysToLoad", "200"]))
+        let importer = WealthsimpleImporter(ledger: ledger)
+        var verifiedTransactions = false
+        let account = TestAccount()
+        Self.getAccounts = { .success([account]) }
+        Self.getPositions = { _, _ in .success([]) }
+        Self.getTransactions = { _, date in
+            XCTAssertEqual(Calendar.current.compare(date!, to: Date(timeIntervalSinceNow: self.threeDays), toGranularity: .minute), .orderedSame)
+            verifiedTransactions = true
+            return .success([])
+        }
+        importer.downloaderClass = TestDownloader.self
+        importer.load()
+        XCTAssert(verifiedTransactions)
     }
 
     func testLoadTransactions() {

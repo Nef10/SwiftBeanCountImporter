@@ -23,6 +23,7 @@ protocol WealthsimpleDownloaderProvider {
     )
 }
 
+// swiftlint:disable:next type_body_length
 class WealthsimpleImporter: BaseImporter, DownloadImporter { //  swiftlint:disable line_length
 
     override class var importerName: String { "Wealthsimple" }
@@ -63,6 +64,10 @@ class WealthsimpleImporter: BaseImporter, DownloadImporter { //  swiftlint:disab
             * `wealthsimple-refund`
             * `wealthsimple-payment-spend` (optional, will use fallback account if not provided)
 
+        Configuration:
+
+        By default the last two month of data are loaded. To control this, add a custom options like this to your file: YYYY-MM-DD custom "wealthsimple-importer" "pastDaysToLoad" "5".
+
         Full Example:
 
         2020-07-31 open Assets:Checking:Wealthsimple CAD
@@ -99,7 +104,9 @@ class WealthsimpleImporter: BaseImporter, DownloadImporter { //  swiftlint:disab
     var downloaderClass: WealthsimpleDownloaderProvider.Type = WealthsimpleDownloader.self
 
     private let existingLedger: Ledger
-    private let sixtyTwoDays = -60 * 60 * 24 * 364.0
+    private let sixtyTwoDays = -60 * 60 * 24 * 62.0
+    private let customsKey = "wealthsimple-importer"
+    private let daysSettings = "pastDaysToLoad"
 
     private var downloader: WealthsimpleDownloaderProvider!
     private var mapper: WealthsimpleLedgerMapper
@@ -128,6 +135,13 @@ class WealthsimpleImporter: BaseImporter, DownloadImporter { //  swiftlint:disab
         }
 
         group.wait()
+    }
+
+    private func dateToLoadFrom() -> Date {
+        guard let days = Int(existingLedger.custom.filter({ $0.name == customsKey && $0.values.first == daysSettings }).max(by: { $0.date < $1.date })?.values[1] ?? "") else {
+            return Date(timeIntervalSinceNow: self.sixtyTwoDays )
+        }
+        return Date(timeIntervalSinceNow: -60 * 60 * 24 * Double(days) )
     }
 
     private func download(_ completion: @escaping () -> Void) {
@@ -202,7 +216,7 @@ class WealthsimpleImporter: BaseImporter, DownloadImporter { //  swiftlint:disab
         downloadedAccounts.forEach { account in
             group.enter()
             DispatchQueue.global(qos: .userInitiated).async {
-                self.downloader.getTransactions(in: account, startDate: Date(timeIntervalSinceNow: self.sixtyTwoDays )) { result in
+                self.downloader.getTransactions(in: account, startDate: self.dateToLoadFrom()) { result in
                     switch result {
                     case let .failure(error):
                         self.delegate?.error(error)
