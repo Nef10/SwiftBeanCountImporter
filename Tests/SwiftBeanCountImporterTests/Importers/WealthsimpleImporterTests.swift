@@ -117,8 +117,7 @@ final class WealthsimpleImporterTests: XCTestCase { // swiftlint:disable:this ty
     }
 
     func testHelpText() {
-        XCTAssertEqual(WealthsimpleImporter.helpText,
-                       "TODO")
+        XCTAssert(WealthsimpleImporter.helpText.hasPrefix("Downloads transactions, prices and balances from Wealthsimple."))
     }
 
     func testImportName() {

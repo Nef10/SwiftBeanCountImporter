@@ -23,14 +23,76 @@ protocol WealthsimpleDownloaderProvider {
     )
 }
 
-class WealthsimpleImporter: BaseImporter, DownloadImporter {
+class WealthsimpleImporter: BaseImporter, DownloadImporter { //  swiftlint:disable line_length
 
     override class var importerName: String { "Wealthsimple" }
     override class var importerType: String { "wealthsimple" }
     override class var helpText: String {
         """
-        TODO
-        """
+        Downloads transactions, prices and balances from Wealthsimple.
+
+        The importer relies on meta data in your Beancount file to find accounts and commodities. Please add these to your Beancount file:
+
+        Commodities:
+
+        If the commodity in your ledger differs from the symbol used by Wealthsimple, simply add `wealthsimple-symbol` as meta data, for example:
+
+        2011-10-18 commodity ACWVETF
+          wealthsimple-symbol: "ACWV"
+
+        Accounts:
+
+        For Wealthsimple accounts themselves, you need to add this metadata: `importer-type: "wealthsimple"` and `number: "XXX"`. If the account can hold more than one commodity (all accounts except chequing and saving), it needs to follow this structure: `Assets:X:Y:Z:CashAccountName`, `Assets:X:Y:Z:CommodityName`, `Assets:X:Y:Z:OtherCommodityName`. The name of the cash account does not matter, but all other account must end with the commodity symbol (see above). Add the `importer-type` and `number` only to the cash account.
+
+        For accounts used in transactions to and from your Wealthsimple accounts you need to provide meta data as well. These is in the form of `wealthsimple-key: "accountNumber1 accountNumber2"`. The account number is the same as above, and you can specify one or multiple per key. As keys use these values:
+        * For dividend income accounts `wealthsimple-dividend-COMMODITYSYMBOL`, e.g. `wealthsimple-dividend-XGRO`
+        * For the assset account you are using to contribute to registered accounts from, use `wealthsimple-contribution`
+        * For the assset account you are using to deposit to non-registered accounts from, use `wealthsimple-deposit`
+        * Use `wealthsimple-fee` on an expense account to track the wealthsimple fees
+        * Use `wealthsimple-non-resident-withholding-tax` on an expense account for non resident withholding tax
+        * In case some transaction does not balance within your ledger, an expense account with `wealthsimple-rounding` will get the difference
+        * If you want to track contribution room, use `wealthsimple-contribution-room` on an asset and expense account (optional, if not set it will not create postings for the contribution room)
+        * Other values for transaction types you might incur are:
+            * `wealthsimple-reimbursement`
+            * `wealthsimple-interest`
+            * `wealthsimple-withdrawal`
+            * `wealthsimple-payment-transfer-in` and `wealthsimple-payment-transfer-out`
+            * `wealthsimple-transfer-in` and `wealthsimple-transfer-out`
+            * `wealthsimple-referral-bonus`
+            * `wealthsimple-giveaway-bonus`
+            * `wealthsimple-refund`
+            * `wealthsimple-payment-spend` (optional, will use fallback account if not provided)
+
+        Full Example:
+
+        2020-07-31 open Assets:Checking:Wealthsimple CAD
+          importer-type: "wealthsimple"
+          number: "A001"
+
+        2020-07-31 open Assets:Investment:Wealthsimple:TFSA:Parking CAD
+          importer-type: "wealthsimple"
+          number: "B002"
+        2020-07-31 open Assets:Investment:Wealthsimple:TFSA:ACWV ACWV
+        2020-07-31 open Assets:Investment:Wealthsimple:TFSA:XGRO XGRO
+
+        2020-07-31 open Income:Capital:Dividend:ACWV USD
+          wealthsimple-dividend-ACWV: "A001 B002"
+
+        2020-07-31 open Assets:Checking:Bank CAD
+          wealthsimple-contribution: "A001 B002"
+
+        2020-07-31 open Expenses:FinancialInstitutions:Investment:NonRegistered:Fees
+          wealthsimple-fee: "A001"
+
+        2020-07-31 open Expenses:FinancialInstitutions:Investment:Registered:Fees
+          wealthsimple-fee: "B002"
+
+        2020-07-31 open Assets:TFSAContributionRoom TFSA.ROOM
+          wealthsimple-contribution-room: "B002"
+
+        2020-07-31 open Expenses:TFSAContributionRoom TFSA.ROOM
+          wealthsimple-contribution-room: "B002"
+        """ //  swiftlint:enable line_length
     }
 
     override var importName: String { "Wealthsimple Download" }
