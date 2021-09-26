@@ -12,4 +12,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     COV="$(xcrun -f llvm-cov)"
 fi
 
-$COV report "${FILE}" -instr-profile="${BIN}/codecov/default.profdata" -ignore-filename-regex=".build|Tests" -show-branch-summary=0
+VERSION="$($COV --version | grep --only-matching "version [0-9]*" | cut -c 9-)"
+ARGS=""
+
+if [ "$VERSION" -gt "12" ]; then
+    ARGS="-show-branch-summary=0"
+fi
+
+$COV report "${FILE}" -instr-profile="${BIN}/codecov/default.profdata" -ignore-filename-regex=".build|Tests" $ARGS
