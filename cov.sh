@@ -20,8 +20,7 @@ ARGS=""
 if [ "$VERSION" -gt "12" ]; then
     ARGS="-show-branch-summary=0 "
 fi
-if [ -t 1 ]; then
-    echo "COLOR"
+if [ -t 1 ] || [ "${GITHUB_ACTIONS}" = true ]; then
     ARGS="${ARGS}--use-color "
 fi
 
