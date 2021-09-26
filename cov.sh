@@ -9,7 +9,9 @@ COV="$(dirname "$(which swift)")/llvm-cov"
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
     FILE="${FILE}/Contents/MacOS/$(basename $FILE .xctest)"
-    COV="$(xcrun -f llvm-cov)"
+    if [[ ! -f "$COV" ]]; then
+        COV="$(xcrun -f llvm-cov)"
+    fi
 fi
 
 VERSION="$($COV --version | grep --only-matching "version [0-9]*" | cut -c 9-)"
