@@ -18,7 +18,11 @@ VERSION="$($COV --version | grep --only-matching "version [0-9]*" | cut -c 9-)"
 ARGS=""
 
 if [ "$VERSION" -gt "12" ]; then
-    ARGS="-show-branch-summary=0"
+    ARGS="-show-branch-summary=0 "
+fi
+if [ -t 1 ]; then
+    echo "COLOR"
+    ARGS="${ARGS}--use-color "
 fi
 
 $COV report "${FILE}" -instr-profile="${BIN}/codecov/default.profdata" -ignore-filename-regex=".build|Tests" $ARGS
