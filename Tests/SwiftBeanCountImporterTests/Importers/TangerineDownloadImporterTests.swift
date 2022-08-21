@@ -57,7 +57,7 @@ final class TangerineDownloadImporterTests: XCTestCase {
     private static var transactionsLoading: (([String: [String: Any]], Date) -> Result<[String: [[String: Any]]], Error>)?
     private static var transactionsMapping: (([String: [[String: Any]]]) throws -> [Transaction])?
     private static var ledgerAccountNameMapping: (([String: Any]) throws -> AccountName)?
-    private static var balancesMapping: (([[String: Any]], Date)throws  -> [Balance])?
+    private static var balancesMapping: (([[String: Any]], Date) throws -> [Balance])?
     private static let defaultAccount = try! AccountName("Expenses:Todo") // swiftlint:disable:this force_try
 
     private let sixtyTwoDays = -60 * 60 * 24 * 62.0
