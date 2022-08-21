@@ -51,6 +51,9 @@ class TangerineDownloadImporter: BaseImporter, DownloadImporter {
         """
         Downloads transactions and the current balance from the Tangerine website.
 
+        The importer relies on meta data in your Beancount file to find your accounts.
+        For Credit Cards, please add `importer-type: "tangerine-card"` and `last-four: "XXXX"` with the last four digits of your number to your Credit Card Liability account. For other account types (like Checking, Savings, and LOC), please add `importer-type: "tangerine-account"` and `number: "XXXX"` with the account number as meta data to the account in your Beancount file.
+
         By default the last two month of data are loaded. To control this, add a custom options like this to your file: YYYY-MM-DD custom "tangerine-download-importer" "pastDaysToLoad" "5".
         """
     } //  swiftlint:enable line_length
