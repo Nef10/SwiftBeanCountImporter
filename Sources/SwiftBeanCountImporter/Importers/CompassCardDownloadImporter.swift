@@ -7,10 +7,10 @@
 
 #if canImport(UIKit) || canImport(AppKit)
 
-import Foundation
-import SwiftBeanCountModel
 import CompassCardDownloader
+import Foundation
 import SwiftBeanCountCompassCardMapper
+import SwiftBeanCountModel
 #if canImport(UIKit)
 import UIKit
 #else
@@ -32,7 +32,6 @@ protocol SwiftBeanCountCompassCardMapperProvider {
     func createTransactions(cardNumber: String, transactions: String) throws -> [Transaction]
     func ledgerCardAccountName(cardNumber: String) throws -> AccountName
 }
-
 
 @available(iOS 14.5, macOS 11.3, *)
 class CompassCardDownloadImporter: BaseImporter, DownloadImporter {
@@ -234,7 +233,6 @@ extension CompassCardDownloadImporter: CompassCardDownloaderDelegate {
 
     #endif
 }
-
 
 @available(iOS 14.5, macOS 11.3, *)
 extension CompassCardDownloader: CompassCardDownloaderProvider {
