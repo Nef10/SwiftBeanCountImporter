@@ -6,8 +6,10 @@
 //  Copyright © 2023 Steffen Kötte. All rights reserved.
 //
 
+#if canImport(UIKit) || canImport(AppKit)
 import CompassCardDownloader
 import SwiftBeanCountCompassCardMapper
+#endif
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
 import XCTest
