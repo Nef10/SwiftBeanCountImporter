@@ -7,9 +7,9 @@
 //
 
 #if canImport(UIKit) || canImport(AppKit)
+
 import CompassCardDownloader
 import SwiftBeanCountCompassCardMapper
-#endif
 @testable import SwiftBeanCountImporter
 import SwiftBeanCountModel
 import XCTest
@@ -200,3 +200,5 @@ final class CompassCardDownloadImporterTests: XCTestCase {
     }
 
 }
+
+#endif
