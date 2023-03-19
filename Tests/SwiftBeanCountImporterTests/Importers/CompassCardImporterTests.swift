@@ -70,7 +70,10 @@ final class CompassCardImporterTests: XCTestCase {
     func testError() throws {
         let reader = try CSVReader(string: ",\n,", hasHeaderRow: true)
         let delegate = ErrorCheckDelegate(inputNames: ["Account"], inputSecrets: [false], inputReturnValues: ["Assets:CompassCard"]) {
-            $0.localizedDescription == "The data couldn’t be read because it is missing."
+            if case let DecodingError.keyNotFound(key, _) = $0 {
+                return key.stringValue == "DateTime"
+            }
+            return false
         }
         let importer = CompassCardImporter(ledger: Ledger(), csvReader: reader, fileName: "")
         importer.delegate = delegate
