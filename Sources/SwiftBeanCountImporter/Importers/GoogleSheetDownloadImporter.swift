@@ -7,11 +7,11 @@
 
 #if os(macOS)
 
+import AuthenticationServices
 import Foundation
+import GoogleAuthentication
 import SwiftBeanCountModel
 import SwiftBeanCountSheetSync
-import GoogleAuthentication
-import AuthenticationServices
 
 class AuthenticationPresentationContextProvider: NSObject, ASWebAuthenticationPresentationContextProviding {
     func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
@@ -92,29 +92,28 @@ class GoogleSheetDownloadImporter: BaseImporter, DownloadImporter {
                 switch $0 {
                 case .success:
                     downloader.start(authentication: authentication) { [self] in
-                        switch $0 {
-                        case .success(let result):
-                            process(result)
-                            group.leave()
-                        case .failure(let error):
-                            group.leave()
-                            delegate?.error(error)
-                        }
+                        process($0)
+                        group.leave()
                     }
                 case .failure(let error):
-                    group.leave()
                     delegate?.error(error)
+                    group.leave()
                 }
             }
         }
         group.wait()
     }
 
-    private func process(_ result: SyncResult) {
-        for error in result.parserErrors {
+    private func process(_ result: Result<SyncResult, Error>) {
+        switch result {
+        case .success(let result):
+            for error in result.parserErrors {
+                delegate?.error(error)
+            }
+            transactions = result.transactions.map { ImportedTransaction($0) }
+        case .failure(let error):
             delegate?.error(error)
         }
-        transactions = result.transactions.map { ImportedTransaction($0) }
     }
 
     override func nextTransaction() -> ImportedTransaction? {

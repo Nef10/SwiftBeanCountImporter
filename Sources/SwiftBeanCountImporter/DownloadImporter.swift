@@ -16,7 +16,13 @@ enum DownloadImporterFactory {
         #if canImport(UIKit) || canImport(AppKit)
             if #available(iOS 14.5, macOS 11.3, *) {
                 #if os(macOS)
-                    return [WealthsimpleDownloadImporter.self, RogersDownloadImporter.self, TangerineDownloadImporter.self, CompassCardDownloadImporter.self, GoogleSheetDownloadImporter.self]
+                    return [
+                        WealthsimpleDownloadImporter.self,
+                        RogersDownloadImporter.self,
+                        TangerineDownloadImporter.self,
+                        CompassCardDownloadImporter.self,
+                        GoogleSheetDownloadImporter.self
+                    ]
                 #else
                     return [WealthsimpleDownloadImporter.self, RogersDownloadImporter.self, TangerineDownloadImporter.self, CompassCardDownloadImporter.self]
                 #endif
