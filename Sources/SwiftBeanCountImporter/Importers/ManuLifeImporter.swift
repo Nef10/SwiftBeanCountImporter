@@ -283,7 +283,7 @@ class ManuLifeImporter: BaseImporter, TransactionBalanceTextImporter {
 
     private func generatePostings(from buy: ManuLifeBuy) -> ([Posting], Decimal) {
         var postings = [Posting]()
-        let unitFraction = Double(buy.units)! / (employeeBasicFraction + employerBasicFraction + employerMatchFraction + employeeVoluntaryFraction)
+        let unitFraction = Double(buy.units.replacingOccurrences(of: ",", with: ""))! / (employeeBasicFraction + employerBasicFraction + employerMatchFraction + employeeVoluntaryFraction)
         let (buyAmount, _) = buy.total.amountDecimal()
         let sign = buyAmount.sign == .minus ? -1.0 : 1.0
         let price = parseAmountFrom(string: buy.price, commoditySymbol: commoditySymbol)
