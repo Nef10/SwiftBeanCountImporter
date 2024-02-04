@@ -10,35 +10,19 @@ import Foundation
 import SwiftBeanCountModel
 import SwiftBeanCountParserUtils
 
+/// Errors which can happen when importing
+enum EquatePlusImporterError: Error {
+    case balanceImportNotSupported(String)
+    case failedToParseDate(String)
+    case unknownContributionType(String)
+    case unknownTransactionType(String)
+    case invalidContributionMapping(String, String)
+    case invalidTransactionMapping(String, String)
+
+}
+
 // swiftlint:disable:next type_body_length
 class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
-
-    /// Errors which can happen when importing
-    enum EquatePlusImporterError: Error, LocalizedError {
-        case balancImportNotSupported(String)
-        case failedToParseDate(String)
-        case unknownContributionType(String)
-        case unknownTransactionType(String)
-        case invalidContributionMapping(ContributionType, Contribution)
-        case invalidTransactionMapping(TransactionType, EquatePlusTransaction)
-
-        public var errorDescription: String? {
-            switch self {
-            case let .balancImportNotSupported(string):
-                return "This importer does not support importing balances. Trying to import: \(string)"
-            case let .failedToParseDate(string):
-                return "Failed to parse date: \(string)"
-            case let .unknownContributionType(string):
-                return "Unknow contribution type: \(string)"
-            case let .unknownTransactionType(string):
-                return "Unknow transaction type: \(string)"
-            case let .invalidContributionMapping(type, contribution):
-                return "Unable to map contributions correctly. Found second contribtuion for type \(type): \(contribution)"
-            case let .invalidTransactionMapping(type, transaction):
-                return "Unable to map transactions correctly. Found second transaction for type \(type): \(transaction)"
-            }
-        }
-    }
 
     struct Contribution {
         var date: Date
@@ -49,7 +33,7 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
         var purchasedShares: Amount
     }
 
-    enum ContributionType {
+    enum ContributionType: String {
         case you
         case employer
     }
@@ -149,7 +133,7 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
 
     override func load() {
         if !balanceInputString.isEmpty {
-            self.delegate?.error(EquatePlusImporterError.balancImportNotSupported(balanceInputString))
+            self.delegate?.error(EquatePlusImporterError.balanceImportNotSupported(balanceInputString))
         }
         if !transactionInputString.isEmpty {
             do {
@@ -249,7 +233,7 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
                     groupedTransaction.amountAvailableYou = contribution.amountAvailable
                     groupedTransaction.purchasedSharesYou = contribution.purchasedShares
                 } else {
-                    throw EquatePlusImporterError.invalidContributionMapping(.you, contribution)
+                    throw EquatePlusImporterError.invalidContributionMapping(ContributionType.you.rawValue, String(describing: contribution))
                 }
             } else if contribution.type == .employer {
                 if groupedTransaction.amountEmployer == nil && groupedTransaction.amountAvailableEmployer == nil && groupedTransaction.purchasedSharesEmployer == nil {
@@ -257,7 +241,7 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
                     groupedTransaction.amountAvailableEmployer = contribution.amountAvailable
                     groupedTransaction.purchasedSharesEmployer = contribution.purchasedShares
                 } else {
-                    throw EquatePlusImporterError.invalidContributionMapping(.employer, contribution)
+                    throw EquatePlusImporterError.invalidContributionMapping(ContributionType.employer.rawValue, String(describing: contribution))
                 }
             }
 
@@ -312,13 +296,13 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
                 if groupedTransaction.matchAmount == nil {
                     groupedTransaction.matchAmount = transaction.amount
                 } else {
-                    throw EquatePlusImporterError.invalidTransactionMapping(.match, transaction)
+                    throw EquatePlusImporterError.invalidTransactionMapping(TransactionType.match.rawValue, String(describing: transaction))
                 }
             } else if transaction.type == .purchase {
                 if groupedTransaction.purchaseAmount == nil {
                     groupedTransaction.purchaseAmount = transaction.amount
                 } else {
-                    throw EquatePlusImporterError.invalidTransactionMapping(.purchase, transaction)
+                    throw EquatePlusImporterError.invalidTransactionMapping(TransactionType.purchase.rawValue, String(describing: transaction))
                 }
             }
 
@@ -371,5 +355,24 @@ class EquatePlusImporter: BaseImporter, TransactionBalanceTextImporter {
     private func parseAmountFrom(string: String, commoditySymbol: String) -> Amount {
         let (number, decimalDigits) = string.amountDecimal()
         return Amount(number: number, commoditySymbol: commoditySymbol, decimalDigits: decimalDigits)
+    }
+}
+
+extension EquatePlusImporterError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case let .balanceImportNotSupported(string):
+            return "This importer does not support importing balances. Trying to import: \(string)"
+        case let .failedToParseDate(string):
+            return "Failed to parse date: \(string)"
+        case let .unknownContributionType(string):
+            return "Unknow contribution type: \(string)"
+        case let .unknownTransactionType(string):
+            return "Unknow transaction type: \(string)"
+        case let .invalidContributionMapping(type, contribution):
+            return "Unable to map contributions correctly. Found second contribtuion for type \(type): \(contribution)"
+        case let .invalidTransactionMapping(type, transaction):
+            return "Unable to map transactions correctly. Found second transaction for type \(type): \(transaction)"
+        }
     }
 }
