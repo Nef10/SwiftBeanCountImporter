@@ -421,6 +421,7 @@ final class WealthsimpleDownloadImporterTests: XCTestCase { // swiftlint:disable
 
 }
 
+extension Wealthsimple.AccountError: @retroactive Equatable {}
 extension Wealthsimple.AccountError: EquatableError {
     public static func == (lhs: Wealthsimple.AccountError, rhs: Wealthsimple.AccountError) -> Bool {
         if case let .httpError(lhsString) = lhs, case let .httpError(rhsString) = rhs {
@@ -430,6 +431,7 @@ extension Wealthsimple.AccountError: EquatableError {
     }
 }
 
+extension Wealthsimple.PositionError: @retroactive Equatable {}
 extension Wealthsimple.PositionError: EquatableError {
     public static func == (lhs: Wealthsimple.PositionError, rhs: Wealthsimple.PositionError) -> Bool {
         if case let .httpError(lhsString) = lhs, case let .httpError(rhsString) = rhs {
@@ -439,6 +441,7 @@ extension Wealthsimple.PositionError: EquatableError {
     }
 }
 
+extension Wealthsimple.TransactionError: @retroactive Equatable {}
 extension Wealthsimple.TransactionError: EquatableError {
     public static func == (lhs: Wealthsimple.TransactionError, rhs: Wealthsimple.TransactionError) -> Bool {
         if case let .httpError(lhsString) = lhs, case let .httpError(rhsString) = rhs {
