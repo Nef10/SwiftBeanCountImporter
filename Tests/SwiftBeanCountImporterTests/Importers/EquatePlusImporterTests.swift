@@ -249,7 +249,10 @@ final class EquatePlusImporterTests: XCTestCase {
     }
 }
 
+#if hasFeature(RetroactiveAttribute)
 extension EquatePlusImporterError: @retroactive Equatable {}
+#endif
+
 extension EquatePlusImporterError: EquatableError {
     public static func == (lhs: EquatePlusImporterError, rhs: EquatePlusImporterError) -> Bool {
         if case let .balanceImportNotSupported(lhsString) = lhs, case let .balanceImportNotSupported(rhsString) = rhs {
@@ -274,7 +277,10 @@ extension EquatePlusImporterError: EquatableError {
     }
 }
 
+#if hasFeature(RetroactiveAttribute)
 extension AccountNameError: @retroactive Equatable {}
+#endif
+
 extension AccountNameError: EquatableError {
     public static func == (lhs: AccountNameError, rhs: AccountNameError) -> Bool {
         if case let .invaildName(lhsString) = lhs, case let .invaildName(rhsString) = rhs {

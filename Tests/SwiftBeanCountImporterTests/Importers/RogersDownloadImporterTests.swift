@@ -393,7 +393,10 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     }
 }
 
+#if hasFeature(RetroactiveAttribute)
 extension DownloadError: @retroactive Equatable {}
+#endif
+
 extension DownloadError: EquatableError {
     public static func == (lhs: DownloadError, rhs: DownloadError) -> Bool {
         if case let .invalidParameters(lhsDict) = lhs, case let .invalidParameters(rhsDict) = rhs {
@@ -403,7 +406,10 @@ extension DownloadError: EquatableError {
     }
 }
 
+#if hasFeature(RetroactiveAttribute)
 extension RogersBankMappingError: @retroactive Equatable {}
+#endif
+
 extension RogersBankMappingError: EquatableError {
     public static func == (lhs: RogersBankMappingError, rhs: RogersBankMappingError) -> Bool {
         if case let .missingAccount(lhsString) = lhs, case let .missingAccount(rhsString) = rhs {
