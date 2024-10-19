@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>SettingsStorage Protocol Reference</title>
+    <title>ImporterInputRequestType Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -11,9 +11,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Protocol/SettingsStorage" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Enum/ImporterInputRequestType" class="dashAnchor"></a>
 
-    <a title="SettingsStorage Protocol Reference"></a>
+    <a title="ImporterInputRequestType Enumeration Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -42,9 +42,9 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">SwiftBeanCountImporter</a>
       <img class="carat" src="../img/carat.png" alt=""/>
-      <a class="breadcrumb" href="../Protocols.html">Protocols</a>
+      <a class="breadcrumb" href="../Enums.html">Enumerations</a>
       <img class="carat" src="../img/carat.png" alt=""/>
-      SettingsStorage Protocol Reference
+      ImporterInputRequestType Enumeration Reference
     </p>
 
     <div class="content-wrapper">
@@ -100,18 +100,19 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>SettingsStorage</h1>
+            <h1>ImporterInputRequestType</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">SettingsStorage</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">ImporterInputRequestType</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">ImporterInputRequestType</span><span class="p">:</span> <span class="kt">Equatable</span></code></pre>
 
                 </div>
               </div>
-            <p>Protocol to define a storage for the settings</p>
+            <p>Type of user input requested by the importer</p>
 
               <div class="slightly-smaller">
-                <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Settings.swift#L12-L22">Show on GitHub</a>
+                <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L138-L147">Show on GitHub</a>
               </div>
           </div>
         </section>
@@ -123,9 +124,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:22SwiftBeanCountImporter15SettingsStorageP3set_6forKeyyypSg_SStF"></a>
-                    <a name="//apple_ref/swift/Method/set(_:forKey:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:22SwiftBeanCountImporter15SettingsStorageP3set_6forKeyyypSg_SStF">set(_:<wbr>forKey:<wbr>)</a>
+                    <a name="/s:22SwiftBeanCountImporter0D16InputRequestTypeO4textyACSaySSGcACmF"></a>
+                    <a name="//apple_ref/swift/Element/text(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter0D16InputRequestTypeO4textyACSaySSGcACmF">text(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -133,19 +134,19 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Saves a value for a key</p>
+                        <p>Normal text, with suggestions (optional)</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">set</span><span class="p">(</span><span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?,</span> <span class="n">forKey</span> <span class="n">defaultName</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="nf">text</span><span class="p">([</span><span class="kt">String</span><span class="p">])</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Settings.swift#L15">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L140">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -153,9 +154,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:22SwiftBeanCountImporter15SettingsStorageP6string6forKeySSSgSS_tF"></a>
-                    <a name="//apple_ref/swift/Method/string(forKey:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:22SwiftBeanCountImporter15SettingsStorageP6string6forKeySSSgSS_tF">string(forKey:<wbr>)</a>
+                    <a name="/s:22SwiftBeanCountImporter0D16InputRequestTypeO6secretyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/secret" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter0D16InputRequestTypeO6secretyA2CmF">secret</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -163,19 +164,19 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Gets a saved string for a given key</p>
+                        <p>Secrect, should not be visible if the user enters it</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">string</span><span class="p">(</span><span class="n">forKey</span> <span class="n">defaultName</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">secret</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Settings.swift#L18">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L142">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
@@ -183,9 +184,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:22SwiftBeanCountImporter15SettingsStorageP10dictionary6forKeySDySSypGSgSS_tF"></a>
-                    <a name="//apple_ref/swift/Method/dictionary(forKey:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:22SwiftBeanCountImporter15SettingsStorageP10dictionary6forKeySDySSypGSgSS_tF">dictionary(forKey:<wbr>)</a>
+                    <a name="/s:22SwiftBeanCountImporter0D16InputRequestTypeO3otpyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/otp" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter0D16InputRequestTypeO3otpyA2CmF">otp</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -193,19 +194,78 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Gets a saved dictionary for a given key</p>
+                        <p>one time passcase, can offer the use auto fill from text or similr</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">dictionary</span><span class="p">(</span><span class="n">forKey</span> <span class="n">defaultName</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">otp</span></code></pre>
 
                         </div>
                       </div>
                       <div class="slightly-smaller">
-                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Settings.swift#L21">Show on GitHub</a>
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L144">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:22SwiftBeanCountImporter0D16InputRequestTypeO4boolyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/bool" class="dashAnchor"></a>
+                    <a class="token" href="#/s:22SwiftBeanCountImporter0D16InputRequestTypeO4boolyA2CmF">bool</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>a questions which the user can answer with yes or no</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L146">Show on GitHub</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:SQ2eeoiySbx_xtFZ"></a>
+                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:SQ2eeoiySbx_xtFZ">==(_:<wbr>_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="err">`</span><span class="k">Self</span><span class="err">`</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="err">`</span><span class="k">Self</span><span class="err">`</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div class="slightly-smaller">
+                        <a href="https://github.com/Nef10/SwiftBeanCountImporter/blob/main/Sources/SwiftBeanCountImporter/Importer.swift#L257-L268">Show on GitHub</a>
                       </div>
                     </section>
                   </div>
