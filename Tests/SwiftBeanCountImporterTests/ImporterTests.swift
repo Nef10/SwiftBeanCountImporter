@@ -65,7 +65,7 @@ final class ImporterTests: XCTestCase {
     }
 
     func testDownloadImporterNames() {
-        XCTAssertEqual(ImporterFactory.downloadImporterNames, DownloadImporterFactory.importers.map { $0.importerName })
+        XCTAssertEqual(ImporterFactory.downloadImporterNames, DownloadImporterFactory.importers.map(\.importerName))
     }
 
     func testImportedTransactionSaveMapped() {
