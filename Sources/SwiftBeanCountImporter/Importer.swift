@@ -33,7 +33,9 @@ public enum ImporterFactory {
     ///
     /// - Returns: The names of all existing download importer types
     public static var downloadImporterNames: [String] {
-        DownloadImporterFactory.importers.map(\.importerName)
+        // see https://github.com/realm/SwiftLint/issues/5831
+        // swiftlint:disable:next prefer_key_path
+        DownloadImporterFactory.importers.map { $0.importerName }
     }
 
     // Creates an Importer to import a transaction and balance String, or nil if the text cannot be imported
