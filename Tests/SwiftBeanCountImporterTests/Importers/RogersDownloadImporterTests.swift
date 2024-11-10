@@ -411,7 +411,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
     }
 
     func testSelectTwoFactorPreferenceTwoOptions() throws {
-        delegate = CredentialInputDelegate(inputNames: ["Prefered OTP option"],
+        delegate = CredentialInputDelegate(inputNames: ["prefered One Time Password option"],
                                            inputTypes: [.choice(["123456789", "abc@def.ge"])],
                                            inputReturnValues: ["abc@def.ge"],
                                            saveKeys: [],
