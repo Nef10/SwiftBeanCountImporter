@@ -405,7 +405,7 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         let importer = RogersDownloadImporter(ledger: ledger)
         importer.authenticatorClass = TestAuthenticator.self
         importer.delegate = delegate
-        let pref = try JSONDecoder().decode(TwoFactorPreference.self, from: "{\"type\":\"SMS\",\"value\":\"123456789\"}".data(using: .utf8)!)
+        let pref = try JSONDecoder().decode(TwoFactorPreference.self, from: Data("{\"type\":\"SMS\",\"value\":\"123456789\"}".utf8))
         XCTAssertEqual(importer.selectTwoFactorPreference([pref]).type, pref.type)
         XCTAssert(delegate.verified, delegate.verificationInfo)
     }
@@ -421,8 +421,8 @@ final class RogersDownloadImporterTests: XCTestCase { // swiftlint:disable:this 
         let importer = RogersDownloadImporter(ledger: ledger)
         importer.authenticatorClass = TestAuthenticator.self
         importer.delegate = delegate
-        let pref1 = try JSONDecoder().decode(TwoFactorPreference.self, from: "{\"type\":\"SMS\",\"value\":\"123456789\"}".data(using: .utf8)!)
-        let pref2 = try JSONDecoder().decode(TwoFactorPreference.self, from: "{\"type\":\"Email\",\"value\":\"abc@def.ge\"}".data(using: .utf8)!)
+        let pref1 = try JSONDecoder().decode(TwoFactorPreference.self, from: Data("{\"type\":\"SMS\",\"value\":\"123456789\"}".utf8))
+        let pref2 = try JSONDecoder().decode(TwoFactorPreference.self, from: Data("{\"type\":\"Email\",\"value\":\"abc@def.ge\"}".utf8))
         XCTAssertEqual(importer.selectTwoFactorPreference([pref1, pref2]).type, pref2.type)
         XCTAssert(delegate.verified, delegate.verificationInfo)
     }
