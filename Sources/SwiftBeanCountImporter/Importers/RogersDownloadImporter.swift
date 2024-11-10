@@ -181,7 +181,7 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
         let group = DispatchGroup()
         group.enter()
         var result: String!
-        self.delegate?.requestInput(name: "Prefered OTP option", type: .choice(preferences.map(\.value))) {
+        self.delegate?.requestInput(name: "prefered One Time Password option", type: .choice(preferences.map(\.value))) {
             guard preferences.map(\.value).contains($0) else {
                 return false
             }
