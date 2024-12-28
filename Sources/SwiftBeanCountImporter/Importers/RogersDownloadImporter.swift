@@ -75,9 +75,10 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
             authenticator.login(username: $0, password: $1, deviceId: $2) { result in
                 switch result {
                 case let .failure(error):
-                    self.removeSavedCredentials {
-                        self.delegate?.error(error)
-                        completion()
+                    self.delegate?.error(error) {
+                        self.removeSavedCredentials {
+                            completion()
+                        }
                     }
                 case let .success(user):
                     DispatchQueue.global(qos: .userInitiated).async {
@@ -97,11 +98,16 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
                 group.enter()
                 DispatchQueue.global(qos: .userInitiated).async {
                     account.downloadActivities(statementNumber: statementNumber) { result in
+                        let resultGroup = DispatchGroup()
                         switch result {
                         case let .failure(error):
-                            self.delegate?.error(error)
-                            errorOccurred = true
-                            group.leave()
+                            resultGroup.enter()
+                            self.delegate?.error(error) {
+                                errorOccurred = true
+                                resultGroup.leave()
+                                group.leave()
+                            }
+                            resultGroup.wait()
                         case let .success(activities):
                             queue.async {
                                 downloadedActivities.append(contentsOf: activities)
@@ -114,7 +120,12 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
             do {
                 self.balances.append(try self.mapper.mapAccountToBalance(account: account))
             } catch {
-                self.delegate?.error(error)
+                let catchGroup = DispatchGroup()
+                catchGroup.enter()
+                self.delegate?.error(error) {
+                    catchGroup.leave()
+                }
+                catchGroup.wait()
                 errorOccurred = true
             }
         }
@@ -134,8 +145,9 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
         do {
             transactions.append(contentsOf: try self.mapper.mapActivitiesToTransactions(activities: activities))
         } catch {
-            self.delegate?.error(error)
-            completion()
+            self.delegate?.error(error) {
+                completion()
+            }
             return
         }
 

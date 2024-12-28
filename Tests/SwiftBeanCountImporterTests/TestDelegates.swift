@@ -27,7 +27,7 @@ class BaseTestImporterDelegate: ImporterDelegate {
         return nil
     }
 
-    func error(_ error: Error) {
+    func error(_ error: Error, completion: () -> Void) {
         XCTFail("error should not be called, received \(error)")
     }
 
@@ -230,12 +230,13 @@ class ErrorDelegate<T: EquatableError>: CredentialInputDelegate {
                    readReturnValues: readReturnValues)
     }
 
-    override func error(_ error: Error) {
+    override func error(_ error: Error, completion: () -> Void) {
         if self.error == nil {
             XCTFail("Received unexpected error: \(error)")
         }
         XCTAssertEqual(error as? T, self.error)
         errorVerified = true
+        completion()
     }
 }
 
@@ -266,13 +267,14 @@ class ErrorCheckDelegate: CredentialInputDelegate {
                    readReturnValues: readReturnValues)
     }
 
-    override func error(_ error: Error) {
+    override func error(_ error: Error, completion: () -> Void) {
         guard let check else {
             XCTFail("Received unexpected error: \(error)")
             return
         }
         XCTAssert(check(error))
         errorVerified = true
+        completion()
     }
 
 }

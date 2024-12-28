@@ -237,7 +237,7 @@ extension InvalidAccountNameProvider: ImporterDelegate {
         return nil
     }
 
-    func error(_: Error) {
+    func error(_: Error, completion: () -> Void) {
         XCTFail("error should not be called")
     }
 

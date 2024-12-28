@@ -146,8 +146,9 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
     private func download(_ completion: @escaping () -> Void) {
         downloader.authenticate { error in
             if let error {
-                self.delegate?.error(error)
-                completion()
+                self.delegate?.error(error) {
+                    completion()
+                }
             } else {
                 self.downloadAccounts(completion)
             }
@@ -158,8 +159,9 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
         downloader.getAccounts { result in
             switch result {
             case let .failure(error):
-                self.delegate?.error(error)
-                completion()
+                self.delegate?.error(error) {
+                    completion()
+                }
             case let .success(accounts):
                 self.downloadedAccounts = accounts
                 self.mapper.accounts = accounts
@@ -178,11 +180,16 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
             group.enter()
             DispatchQueue.global(qos: .userInitiated).async {
                 self.downloader.getPositions(in: account, date: nil) { result in
+                    let resultGroup = DispatchGroup()
                     switch result {
                     case let .failure(error):
-                        self.delegate?.error(error)
-                        errorOccurred = true
-                        group.leave()
+                        resultGroup.enter()
+                        self.delegate?.error(error) {
+                            errorOccurred = true
+                            resultGroup.leave()
+                            group.leave()
+                        }
+                        resultGroup.wait()
                     case let .success(positions):
                         do {
                             let (accountPrices, accountBalances) = try self.mapper.mapPositionsToPriceAndBalance(positions)
@@ -190,9 +197,13 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
                             self.balances.append(contentsOf: accountBalances)
                             group.leave()
                         } catch {
-                            self.delegate?.error(error)
-                            errorOccurred = true
-                            group.leave()
+                            resultGroup.enter()
+                            self.delegate?.error(error) {
+                                errorOccurred = true
+                                resultGroup.leave()
+                                group.leave()
+                            }
+                            resultGroup.wait()
                         }
                     }
                 }
@@ -218,9 +229,10 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
                 self.downloader.getTransactions(in: account, startDate: self.dateToLoadFrom()) { result in
                     switch result {
                     case let .failure(error):
-                        self.delegate?.error(error)
-                        errorOccurred = true
-                        group.leave()
+                        self.delegate?.error(error) {
+                            errorOccurred = true
+                            group.leave()
+                        }
                     case let .success(transactions):
                         do {
                             let (accountPrices, accountTransactions) = try self.mapper.mapTransactionsToPriceAndTransactions(transactions)
@@ -228,9 +240,10 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
                             downloadedTransactions.append(contentsOf: accountTransactions)
                             group.leave()
                         } catch {
-                            self.delegate?.error(error)
-                            errorOccurred = true
-                            group.leave()
+                            self.delegate?.error(error) {
+                                errorOccurred = true
+                                group.leave()
+                            }
                         }
                     }
                 }
