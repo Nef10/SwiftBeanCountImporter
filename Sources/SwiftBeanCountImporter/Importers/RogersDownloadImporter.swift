@@ -98,16 +98,11 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
                 group.enter()
                 DispatchQueue.global(qos: .userInitiated).async {
                     account.downloadActivities(statementNumber: statementNumber) { result in
-                        let resultGroup = DispatchGroup()
                         switch result {
                         case let .failure(error):
-                            resultGroup.enter()
-                            self.delegate?.error(error) {
-                                errorOccurred = true
-                                resultGroup.leave()
-                                group.leave()
-                            }
-                            resultGroup.wait()
+                            errorOccurred = true
+                            self.showError(error)
+                            group.leave()
                         case let .success(activities):
                             queue.async {
                                 downloadedActivities.append(contentsOf: activities)
@@ -120,12 +115,7 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
             do {
                 self.balances.append(try self.mapper.mapAccountToBalance(account: account))
             } catch {
-                let catchGroup = DispatchGroup()
-                catchGroup.enter()
-                self.delegate?.error(error) {
-                    catchGroup.leave()
-                }
-                catchGroup.wait()
+                showError(error)
                 errorOccurred = true
             }
         }
@@ -220,6 +210,15 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
 
     func saveDeviceId(_ deviceId: String) {
         self.delegate?.saveCredential(deviceId, for: "\(Self.importerType)-\(CredentialKey.deviceId.rawValue)")
+    }
+
+    private func showError(_ error: Error) {
+        let group = DispatchGroup()
+        group.enter()
+        self.delegate?.error(error) {
+            group.leave()
+        }
+        group.wait()
     }
 
     private func statementsToLoad() -> Int {

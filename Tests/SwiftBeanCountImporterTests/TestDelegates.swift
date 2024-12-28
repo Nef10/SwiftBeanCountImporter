@@ -27,6 +27,7 @@ class BaseTestImporterDelegate: ImporterDelegate {
         return nil
     }
 
+    // swiftlint:disable:next unused_parameter
     func error(_ error: Error, completion: () -> Void) {
         XCTFail("error should not be called, received \(error)")
     }

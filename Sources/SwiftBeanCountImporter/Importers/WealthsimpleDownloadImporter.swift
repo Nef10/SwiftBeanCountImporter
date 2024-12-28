@@ -23,7 +23,7 @@ protocol WealthsimpleDownloaderProvider {
     )
 }
 
-class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
+class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter { // swiftlint:disable:this type_body_length
 
     override class var importerName: String { "Wealthsimple Download" }
     override class var importerType: String { "wealthsimple" }
@@ -172,7 +172,7 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
         }
     }
 
-    private func downloadPositions(_ completion: @escaping () -> Void) { // swiftlint:disable:this function_body_length
+    private func downloadPositions(_ completion: @escaping () -> Void) {
         let group = DispatchGroup()
         var errorOccurred = false
 
@@ -180,32 +180,21 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
             group.enter()
             DispatchQueue.global(qos: .userInitiated).async {
                 self.downloader.getPositions(in: account, date: nil) { result in
-                    let resultGroup = DispatchGroup()
                     switch result {
                     case let .failure(error):
-                        resultGroup.enter()
-                        self.delegate?.error(error) {
-                            errorOccurred = true
-                            resultGroup.leave()
-                            group.leave()
-                        }
-                        resultGroup.wait()
+                        errorOccurred = true
+                        self.showError(error)
                     case let .success(positions):
                         do {
                             let (accountPrices, accountBalances) = try self.mapper.mapPositionsToPriceAndBalance(positions)
                             self.prices.append(contentsOf: accountPrices)
                             self.balances.append(contentsOf: accountBalances)
-                            group.leave()
                         } catch {
-                            resultGroup.enter()
-                            self.delegate?.error(error) {
-                                errorOccurred = true
-                                resultGroup.leave()
-                                group.leave()
-                            }
-                            resultGroup.wait()
+                            errorOccurred = true
+                            self.showError(error)
                         }
                     }
+                    group.leave()
                 }
             }
         }
@@ -229,23 +218,19 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
                 self.downloader.getTransactions(in: account, startDate: self.dateToLoadFrom()) { result in
                     switch result {
                     case let .failure(error):
-                        self.delegate?.error(error) {
-                            errorOccurred = true
-                            group.leave()
-                        }
+                        errorOccurred = true
+                        self.showError(error)
                     case let .success(transactions):
                         do {
                             let (accountPrices, accountTransactions) = try self.mapper.mapTransactionsToPriceAndTransactions(transactions)
                             self.prices.append(contentsOf: accountPrices)
                             downloadedTransactions.append(contentsOf: accountTransactions)
-                            group.leave()
                         } catch {
-                            self.delegate?.error(error) {
-                                errorOccurred = true
-                                group.leave()
-                            }
+                            errorOccurred = true
+                            self.showError(error)
                         }
                     }
+                    group.leave()
                 }
             }
         }
@@ -283,6 +268,15 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter {
 
     override func pricesToImport() -> [Price] {
         prices
+    }
+
+    private func showError(_ error: Error) {
+        let group = DispatchGroup()
+        group.enter()
+        self.delegate?.error(error) {
+            group.leave()
+        }
+        group.wait()
     }
 
     private func authenticationCallback(callback: @escaping ((String, String, String) -> Void)) {

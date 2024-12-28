@@ -237,6 +237,7 @@ extension InvalidAccountNameProvider: ImporterDelegate {
         return nil
     }
 
+    // swiftlint:disable:next unused_parameter
     func error(_: Error, completion: () -> Void) {
         XCTFail("error should not be called")
     }
