@@ -90,8 +90,11 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
     }
 
     private func downloadAllActivities(accounts: [RogersBankDownloader.Account], _ completion: @escaping () -> Void) { // swiftlint:disable:this function_body_length
-        let group = DispatchGroup(), queue = DispatchQueue(label: "threadSafeDownloadedActivitiesArray")
-        var downloadedActivities = [Activity](), errorOccurred = false
+        let group = DispatchGroup()
+        let queue = DispatchQueue(label: "threadSafeDownloadedActivitiesArray")
+        let errorQueue = DispatchQueue(label: "threadSafeErrorOccurred")
+        var downloadedActivities = [Activity]()
+        var errorOccurred = false
 
         accounts.forEach { account in
             for statementNumber in 0...statementsToLoad() - 1 {
@@ -100,14 +103,16 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
                     account.downloadActivities(statementNumber: statementNumber) { result in
                         switch result {
                         case let .failure(error):
-                            errorOccurred = true
+                            errorQueue.sync {
+                                errorOccurred = true
+                            }
                             self.showError(error)
                             group.leave()
                         case let .success(activities):
-                            queue.async {
+                            queue.sync {
                                 downloadedActivities.append(contentsOf: activities)
-                                group.leave()
                             }
+                            group.leave()
                         }
                     }
                 }
@@ -116,7 +121,9 @@ class RogersDownloadImporter: BaseImporter, DownloadImporter, RogersAuthenticato
                 self.balances.append(try self.mapper.mapAccountToBalance(account: account))
             } catch {
                 showError(error)
-                errorOccurred = true
+                errorQueue.sync {
+                    errorOccurred = true
+                }
             }
         }
 

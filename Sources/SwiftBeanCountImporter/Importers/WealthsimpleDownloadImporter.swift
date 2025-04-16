@@ -174,6 +174,8 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter { // swiftlin
 
     private func downloadPositions(_ completion: @escaping () -> Void) {
         let group = DispatchGroup()
+        let errorQueue = DispatchQueue(label: "errorQueue")
+        let balancesQueue = DispatchQueue(label: "balancesQueue")
         var errorOccurred = false
 
         downloadedAccounts.forEach { account in
@@ -182,15 +184,21 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter { // swiftlin
                 self.downloader.getPositions(in: account, date: nil) { result in
                     switch result {
                     case let .failure(error):
-                        errorOccurred = true
+                        errorQueue.sync {
+                            errorOccurred = true
+                        }
                         self.showError(error)
                     case let .success(positions):
                         do {
                             let (accountPrices, accountBalances) = try self.mapper.mapPositionsToPriceAndBalance(positions)
-                            self.prices.append(contentsOf: accountPrices)
-                            self.balances.append(contentsOf: accountBalances)
+                            balancesQueue.sync {
+                                self.prices.append(contentsOf: accountPrices)
+                                self.balances.append(contentsOf: accountBalances)
+                            }
                         } catch {
-                            errorOccurred = true
+                            errorQueue.sync {
+                                errorOccurred = true
+                            }
                             self.showError(error)
                         }
                     }
@@ -209,6 +217,8 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter { // swiftlin
 
     private func downloadTransactions(_ completion: @escaping () -> Void) { // swiftlint:disable:this function_body_length
         let group = DispatchGroup()
+        let errorQueue = DispatchQueue(label: "errorQueue")
+        let transactionsQueue = DispatchQueue(label: "transactionsQueue")
         var downloadedTransactions = [SwiftBeanCountModel.Transaction]()
         var errorOccurred = false
 
@@ -218,15 +228,21 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter { // swiftlin
                 self.downloader.getTransactions(in: account, startDate: self.dateToLoadFrom()) { result in
                     switch result {
                     case let .failure(error):
-                        errorOccurred = true
+                        errorQueue.sync {
+                            errorOccurred = true
+                        }
                         self.showError(error)
                     case let .success(transactions):
                         do {
                             let (accountPrices, accountTransactions) = try self.mapper.mapTransactionsToPriceAndTransactions(transactions)
-                            self.prices.append(contentsOf: accountPrices)
-                            downloadedTransactions.append(contentsOf: accountTransactions)
+                            transactionsQueue.sync {
+                                self.prices.append(contentsOf: accountPrices)
+                                downloadedTransactions.append(contentsOf: accountTransactions)
+                            }
                         } catch {
-                            errorOccurred = true
+                            errorQueue.sync {
+                                errorOccurred = true
+                            }
                             self.showError(error)
                         }
                     }
