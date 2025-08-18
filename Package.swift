@@ -1,4 +1,4 @@
-// swift-tools-version:6.1
+// swift-tools-version:5.7
 
 import PackageDescription
 
@@ -46,6 +46,5 @@ let package = Package(
             name: "SwiftBeanCountImporterTests",
             dependencies: ["SwiftBeanCountImporter"]
         ),
-    ],
-    swiftLanguageModes: [.v5],
+    ]
 )
