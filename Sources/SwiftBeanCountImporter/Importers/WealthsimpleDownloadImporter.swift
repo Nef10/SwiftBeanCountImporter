@@ -262,6 +262,7 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter { // swiftlin
                     transaction = Transaction(metaData: transaction.metaData, postings: postings)
                 }
                 return ImportedTransaction(transaction,
+                                           originalDescription: description,
                                            shouldAllowUserToEdit: true,
                                            accountName: transaction.postings.first { !expenseAccounts.contains($0.accountName) }!.accountName)
             }
