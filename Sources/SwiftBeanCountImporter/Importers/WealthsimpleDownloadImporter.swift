@@ -18,7 +18,7 @@ protocol WealthsimpleDownloaderProvider {
     func getPositions(in account: Wealthsimple.Account, date: Date?, completion: @escaping (Result<[Wealthsimple.Position], Wealthsimple.PositionError>) -> Void)
     func getTransactions(
         in account: Wealthsimple.Account,
-        startDate: Date?,
+        startDate: Date,
         completion: @escaping (Result<[Wealthsimple.Transaction], Wealthsimple.TransactionError>) -> Void
     )
 }
