@@ -258,7 +258,11 @@ class WealthsimpleDownloadImporter: BaseImporter, DownloadImporter { // swiftlin
                     let posting = transaction.postings.first(where: { $0.accountName == WealthsimpleLedgerMapper.fallbackExpenseAccountName }) {
                     expenseAccounts.append(account)
                     var postings: [Posting] = transaction.postings.filter { $0 != posting }
-                    postings.append(Posting(accountName: account, amount: posting.amount, price: posting.price, cost: posting.cost))
+                    let price = posting.priceType == .total ? posting.totalPrice : posting.price
+                    guard let newPosting = try? Posting(accountName: account, amount: posting.amount, price: price, priceType: posting.priceType, cost: posting.cost) else {
+                        fatalError("Invalid price configuration in posting")
+                    }
+                    postings.append(newPosting)
                     transaction = Transaction(metaData: transaction.metaData, postings: postings)
                 }
                 return ImportedTransaction(transaction,
