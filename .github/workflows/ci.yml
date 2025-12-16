@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
     - name: Check and output correct matrix
       id: output_data
       run: |
@@ -44,9 +44,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout code
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
     - name: Install Swift
-      uses: swift-actions/setup-swift@v2.3.0
+      uses: swift-actions/setup-swift@v2.4.0
     - name: Run tests
       run: swift test --enable-code-coverage -Xswiftc -warnings-as-errors
     - name: Save PR number
@@ -61,7 +61,7 @@ jobs:
         output-file: ./pr/lcov.info
     - name: Upload Coverage Information for Comment
       if: ${{ matrix.os == needs.get_os.outputs.coverage_os }}
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: pr
         path: pr/
@@ -80,9 +80,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Install Swift
-        uses: swift-actions/setup-swift@v2.3.0
+        uses: swift-actions/setup-swift@v2.4.0
       - name: Install SwiftLint
         run: |
           curl -L https://github.com/realm/SwiftLint/releases/download/0.62.1/swiftlint_linux_amd64.zip -o swiftlint.zip
